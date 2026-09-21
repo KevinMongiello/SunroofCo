@@ -1,0 +1,20 @@
+// use prisma-next
+model User {
+  id        String                     @id @default(uuid())
+  email     String                     @unique
+  name      String
+  timecards TimeCard[]
+  createdAt TimestamptzString          @default(now())
+  updatedAt temporal.updatedAtString()
+}
+
+model TimeCard {
+  id          String                     @id @default(uuid())
+  userId      String
+  date        DateString
+  hoursWorked Float
+  createdAt   TimestamptzString          @default(now())
+  updatedAt   temporal.updatedAtString()
+
+  user        User                       @relation(fields:[userId], references:[id])
+}
