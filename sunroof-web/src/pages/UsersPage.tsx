@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import type { User } from "../types/user";
 import { deleteUser, fetchAllUsers } from "../api/users";
-import { UsersTable } from "../components/UserTable";
+import { UserTable } from "../components/UserTable";
 import { useNavigate } from "react-router-dom";
 import { AppHeader } from "../components/AppHeader";
 
@@ -11,7 +11,7 @@ export const UsersPage = () => {
   const pageFetchUsers = useCallback(async () => {
     const users = await fetchAllUsers();
     setUsers(users);
-  }, [setUsers]);
+  }, []);
 
   useEffect(() => {
     pageFetchUsers();
@@ -28,7 +28,7 @@ export const UsersPage = () => {
 
   const buttonConfigs = [
     { onClick: () => navigate("/users/new"), label: "+ Add User" },
-    { onClick: () => {}, label: 'hi there'}
+    { onClick: () => {}, label: "hi there" },
   ];
 
   return (
@@ -38,7 +38,7 @@ export const UsersPage = () => {
         h2="Manage team members and their information."
         buttonConfigs={buttonConfigs}
       />
-      <UsersTable users={users || []} onDelete={onDelete} onEdit={onEdit} />
+      <UserTable users={users} onEdit={onEdit} onDelete={onDelete} />
     </>
   );
 };

@@ -4,6 +4,7 @@ import { UserFormPage } from './pages/UserFormPage';
 import { AppLayout } from './pages/AppLayout';
 import './App.scss';
 import { Dashboard } from './pages/Dashboard';
+import { TimecardsPage } from './pages/TimecardsPage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/users" element={<UsersPage />} />
         <Route path="/users/new" element={<UserFormPage />} />
         <Route path="/users/:id/edit" element={<UserFormPage />} />
+        <Route path="/timecards" element={<TimecardsPage />} />
       </Route>
     </Routes>
   );

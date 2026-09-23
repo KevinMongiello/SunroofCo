@@ -6,10 +6,23 @@ export const fetchAllTimeCards = async ({
 }: {
   includeUser?: boolean;
   limit?: number;
-}) => {
+} = {}) => {
   const params = new URLSearchParams();
   if (includeUser) params.set('includeUser', 'true');
   if (limit && Number.isInteger(limit) && limit > 0) params.set('limit', String(limit));
   const resp = await fetch(`${TIMECARDS_PATH}?${params.toString()}`);
   return await resp.json();
 };
+
+export const deleteTimecard = async (timecardId: string) => {
+  const resp = await fetch(TIMECARDS_PATH + timecardId, {
+    method: "DELETE",
+  });
+
+  if (!resp.ok) {
+    throw new Error("Failed to delete timecard");
+  }
+
+  return resp.json();
+};
+
