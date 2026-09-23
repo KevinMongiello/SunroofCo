@@ -1,16 +1,6 @@
 .user-table {
-  text-align: left;
-  border: 1px solid #ddd;
-  border-collapse: collapse;
-  thead {
-    background-color: #eee;
-    th {
-      padding: 0.55rem 1rem;
-    }
-  }
+  
   td {
-    padding: 0.55rem 1rem;
-    border-bottom: 1px solid #eee;
     &.actions > button {
       margin-right: 0.35rem;
       color: black;

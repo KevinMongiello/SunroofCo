@@ -4,6 +4,11 @@ import { ReportsService } from './reports.service.js';
 @Controller('reports')
 export class ReportsController {
   constructor(private readonly reportsService: ReportsService) {}
+  
+  @Get('dashboard')
+  dashboard() {
+    return this.reportsService.dashboard();
+  }
 
   @Get('user-hours')
   userHours(

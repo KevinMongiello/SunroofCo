@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { TimecardsService } from './timecards.service.js';
 import { CreateTimecardDto } from './dto/create-timecard.dto.js';
 import type { UpdateTimecardDto } from './dto/update-timecard.dto.js';
@@ -8,8 +8,11 @@ export class TimecardsController {
   constructor(private readonly timecardsService: TimecardsService) {}
 
   @Get()
-  findAll() {
-    return this.timecardsService.findAll();
+  findAll(
+    @Query('includeUser') includeUser?: string,
+    @Query('limit') limit?: string
+  ) {
+    return this.timecardsService.findAll({ includeUser: includeUser === 'true', limit });
   }
 
   @Get(':id')

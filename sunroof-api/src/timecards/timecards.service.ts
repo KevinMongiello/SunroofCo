@@ -3,12 +3,21 @@ import { PrismaService } from '../prisma/prisma.service.js';
 import { CreateTimecardDto } from './dto/create-timecard.dto.js';
 import { UpdateTimecardDto } from './dto/update-timecard.dto.js';
 
+interface findAllOptions {
+  includeUser?: boolean;
+  limit?: string;
+}
+
 @Injectable()
 export class TimecardsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  findAll() {
-    return this.prisma.db.orm.public.TimeCard.all();
+  findAll(options: findAllOptions = {}) {
+    const { limit, includeUser } = options;
+    let query = this.prisma.db.orm.public.TimeCard;
+    if (includeUser) query = query.include('user');
+    if (limit) query = query.limit(Number(limit));
+    return query.all();
   }
 
   findOne(id: string) {

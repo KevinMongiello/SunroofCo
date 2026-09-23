@@ -14,7 +14,7 @@ export function UsersTable({
   onDelete,
 }: UsersTableProps) {
   return (
-    <table className='user-table'>
+    <table className='user-table table'>
       <thead>
         <tr>
           <th>Name</th>
