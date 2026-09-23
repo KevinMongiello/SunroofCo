@@ -1,4 +1,6 @@
 import type { User } from '../types/user';
+import { Pen, Pencil, Trash2 } from 'lucide-react';
+import './UserTable.scss';
 
 interface UsersTableProps {
   users: User[];
@@ -12,7 +14,7 @@ export function UsersTable({
   onDelete,
 }: UsersTableProps) {
   return (
-    <table>
+    <table className='user-table'>
       <thead>
         <tr>
           <th>Name</th>
@@ -26,13 +28,13 @@ export function UsersTable({
           <tr key={user.id}>
             <td>{user.name}</td>
             <td>{user.email}</td>
-            <td>
+            <td className='actions'>
               <button onClick={() => onEdit(user)}>
-                Edit
+                <Pencil size={16} />
               </button>
 
-              <button onClick={() => onDelete(user.id)}>
-                Delete
+              <button className='delete' onClick={() => onDelete(user.id)}>
+                <Trash2 size={16} />
               </button>
             </td>
           </tr>

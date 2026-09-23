@@ -22,12 +22,18 @@ export const UsersPage = () => {
   }, []);
 
   const onEdit = useCallback((user: User) => {
-    navigate('/users/' + user.id + '/edit')
+    navigate("/users/" + user.id + "/edit");
   }, []);
 
   return (
     <>
-      <button onClick={() => navigate('/users/new')}>Create New User</button>
+      <header>
+        <div className='header-body'>
+          <h1>Users</h1>
+          <h2>Manage team members and their information.</h2>
+        </div>
+        <button onClick={() => navigate("/users/new")}>+ Add User</button>
+      </header>
       <UsersTable users={users || []} onDelete={onDelete} onEdit={onEdit} />
     </>
   );

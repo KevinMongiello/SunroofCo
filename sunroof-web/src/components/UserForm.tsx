@@ -40,6 +40,7 @@ export const UserForm = ({ onSubmit, initialValues, submitLabel, onCancel }: Use
         placeholder="Email"
       />
 
+      <button type="button" onClick={onCancel}>Cancel</button>
       <button type="submit">{submitLabel} User</button>
     </form>
   );

@@ -1,0 +1,111 @@
+.app-layout {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+}
+
+.app-content__shell {
+  flex: 1;
+  min-width: 0;
+  background: white;
+}
+
+.app-content {
+  padding: 24px;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  width:100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  // height: 100%;
+  header {
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    align-items: center;
+
+    button {
+      background: rgb(63, 119, 241);
+      border-radius: 10px;
+      padding: 0.75em 1em;
+      font-weight: bold;
+      font-size: 16px;
+    }
+  }
+
+  h1 {
+    color: black;
+    margin: 0.25rem 0 1rem;
+    font-size: 40px;
+  }
+
+  h2 {
+    font-size: 20px;
+    color: #676767;
+  }
+}
+
+.app-drawer {
+  width: 240px;
+  flex-shrink: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-between;
+  nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    button {
+      width: 50%;
+      padding: 0.5rem 0;
+      margin: 0.5rem 0;
+    }
+  }
+  h1 {
+    font-size: 2em;
+  }
+}
+
+.drawer-bottom {
+  width: 100%;
+  height: 4em;
+  display: flex;
+  align-items: center;
+  transition-duration: 0.15s;
+  cursor: pointer;
+  &:hover {
+    background: #ffffff0f;
+  }
+
+  .user-gravatar {
+    padding: 0.35rem;
+    margin: 0.5rem;
+    border-radius: 50%;
+    background: #fff;
+    color: #4a4a4a;
+  }
+
+  .user-credentials {
+    flex: 1;
+    min-width: 0;
+    font-size: 14px;
+    line-height: 1.3em;
+    text-align: left;
+    color: #dddddd;
+    padding-right: 0.5em;
+  }
+
+  .user-name,
+  .user-email {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.pointer {
+  cursor: pointer;
+}
