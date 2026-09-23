@@ -3,6 +3,7 @@ import type { User } from "../types/user";
 import { deleteUser, fetchAllUsers } from "../api/users";
 import { UsersTable } from "../components/UserTable";
 import { useNavigate } from "react-router-dom";
+import { AppHeader } from "../components/AppHeader";
 
 export const UsersPage = () => {
   const navigate = useNavigate();
@@ -25,15 +26,18 @@ export const UsersPage = () => {
     navigate("/users/" + user.id + "/edit");
   }, []);
 
+  const buttonConfigs = [
+    { onClick: () => navigate("/users/new"), label: "+ Add User" },
+    { onClick: () => {}, label: 'hi there'}
+  ];
+
   return (
     <>
-      <header>
-        <div className='header-body'>
-          <h1>Users</h1>
-          <h2>Manage team members and their information.</h2>
-        </div>
-        <button onClick={() => navigate("/users/new")}>+ Add User</button>
-      </header>
+      <AppHeader
+        h1="Users"
+        h2="Manage team members and their information."
+        buttonConfigs={buttonConfigs}
+      />
       <UsersTable users={users || []} onDelete={onDelete} onEdit={onEdit} />
     </>
   );
