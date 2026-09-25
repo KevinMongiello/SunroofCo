@@ -107,6 +107,13 @@
           },
           "User": {
             "fields": {
+              "costPerHour": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/float8@1",
+                  "kind": "scalar"
+                }
+              },
               "createdAt": {
                 "nullable": false,
                 "type": {
@@ -132,6 +139,13 @@
                 "nullable": false,
                 "type": {
                   "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "priceToCustomerPerHour": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/float8@1",
                   "kind": "scalar"
                 }
               },
@@ -162,6 +176,9 @@
             },
             "storage": {
               "fields": {
+                "costPerHour": {
+                  "column": "costPerHour"
+                },
                 "createdAt": {
                   "column": "createdAt"
                 },
@@ -173,6 +190,9 @@
                 },
                 "name": {
                   "column": "name"
+                },
+                "priceToCustomerPerHour": {
+                  "column": "priceToCustomerPerHour"
                 },
                 "updatedAt": {
                   "column": "updatedAt"
@@ -265,6 +285,11 @@
             },
             "user": {
               "columns": {
+                "costPerHour": {
+                  "codecId": "pg/float8@1",
+                  "nativeType": "float8",
+                  "nullable": false
+                },
                 "createdAt": {
                   "codecId": "pg/timestamptz-string@1",
                   "default": {
@@ -287,6 +312,11 @@
                 "name": {
                   "codecId": "pg/text@1",
                   "nativeType": "text",
+                  "nullable": false
+                },
+                "priceToCustomerPerHour": {
+                  "codecId": "pg/float8@1",
+                  "nativeType": "float8",
                   "nullable": false
                 },
                 "updatedAt": {
@@ -316,7 +346,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "8fe155b346368733b7e4f840d76252f9463fe663f922d36f54a1c8b04acfe55b"
+    "storageHash": "f9ffe47ab81c36d57cbda9f696c9d0134850bb1fab4e8d16f64fb3ac167270dc"
   },
   "execution": {
     "executionHash": "51f95809d23d311f8dc0552545d152e4101a1d099469044f960346ec8b38ae46",
