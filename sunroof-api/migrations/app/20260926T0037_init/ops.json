@@ -17,202 +17,202 @@
     "postcheck": []
   },
   {
-    "id": "table.timeCard",
-    "label": "Create table \"timeCard\"",
-    "summary": "Creates table \"timeCard\"",
+    "id": "table.TimeCard",
+    "label": "Create table \"TimeCard\"",
+    "summary": "Creates table \"TimeCard\"",
     "operationClass": "additive",
     "target": {
       "id": "postgres",
       "details": {
         "schema": "public",
         "objectType": "table",
-        "name": "timeCard"
+        "name": "TimeCard"
       }
     },
     "precheck": [
       {
-        "description": "ensure table \"timeCard\" does not exist",
+        "description": "ensure table \"TimeCard\" does not exist",
         "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
         "params": [
-          "\"public\".\"timeCard\""
+          "\"public\".\"TimeCard\""
         ]
       }
     ],
     "execute": [
       {
-        "description": "create table \"timeCard\"",
-        "sql": "CREATE TABLE \"public\".\"timeCard\" (\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"date\" date NOT NULL,\n  \"hoursWorked\" float8 NOT NULL,\n  \"id\" text NOT NULL,\n  \"updatedAt\" timestamptz NOT NULL,\n  \"userId\" text NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "description": "create table \"TimeCard\"",
+        "sql": "CREATE TABLE \"public\".\"TimeCard\" (\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"date\" date NOT NULL,\n  \"hoursWorked\" float8 NOT NULL,\n  \"id\" text NOT NULL,\n  \"updatedAt\" timestamptz NOT NULL,\n  \"userId\" text NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
         "params": []
       }
     ],
     "postcheck": [
       {
-        "description": "verify table \"timeCard\" exists",
+        "description": "verify table \"TimeCard\" exists",
         "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
         "params": [
-          "\"public\".\"timeCard\""
+          "\"public\".\"TimeCard\""
         ]
       }
     ]
   },
   {
-    "id": "table.user",
-    "label": "Create table \"user\"",
-    "summary": "Creates table \"user\"",
+    "id": "table.User",
+    "label": "Create table \"User\"",
+    "summary": "Creates table \"User\"",
     "operationClass": "additive",
     "target": {
       "id": "postgres",
       "details": {
         "schema": "public",
         "objectType": "table",
-        "name": "user"
+        "name": "User"
       }
     },
     "precheck": [
       {
-        "description": "ensure table \"user\" does not exist",
+        "description": "ensure table \"User\" does not exist",
         "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
         "params": [
-          "\"public\".\"user\""
+          "\"public\".\"User\""
         ]
       }
     ],
     "execute": [
       {
-        "description": "create table \"user\"",
-        "sql": "CREATE TABLE \"public\".\"user\" (\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"email\" text NOT NULL,\n  \"id\" text NOT NULL,\n  \"name\" text NOT NULL,\n  \"updatedAt\" timestamptz NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "description": "create table \"User\"",
+        "sql": "CREATE TABLE \"public\".\"User\" (\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"email\" text NOT NULL,\n  \"id\" text NOT NULL,\n  \"name\" text NOT NULL,\n  \"updatedAt\" timestamptz NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
         "params": []
       }
     ],
     "postcheck": [
       {
-        "description": "verify table \"user\" exists",
+        "description": "verify table \"User\" exists",
         "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
         "params": [
-          "\"public\".\"user\""
+          "\"public\".\"User\""
         ]
       }
     ]
   },
   {
-    "id": "unique.user.user_email_key",
-    "label": "Add unique constraint on \"user\" (email)",
+    "id": "unique.User.User_email_key",
+    "label": "Add unique constraint on \"User\" (email)",
     "operationClass": "additive",
     "target": {
       "id": "postgres",
       "details": {
         "schema": "public",
         "objectType": "unique",
-        "name": "user_email_key",
-        "table": "user"
+        "name": "User_email_key",
+        "table": "User"
       }
     },
     "precheck": [
       {
-        "description": "ensure constraint \"user_email_key\" does not exist",
+        "description": "ensure constraint \"User_email_key\" does not exist",
         "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
         "params": [
-          "user_email_key",
+          "User_email_key",
           "public",
-          "\"public\".\"user\""
+          "\"public\".\"User\""
         ]
       }
     ],
     "execute": [
       {
-        "description": "add unique constraint \"user_email_key\"",
-        "sql": "ALTER TABLE \"public\".\"user\" ADD CONSTRAINT \"user_email_key\" UNIQUE (\"email\")"
+        "description": "add unique constraint \"User_email_key\"",
+        "sql": "ALTER TABLE \"public\".\"User\" ADD CONSTRAINT \"User_email_key\" UNIQUE (\"email\")"
       }
     ],
     "postcheck": [
       {
-        "description": "verify constraint \"user_email_key\" exists",
+        "description": "verify constraint \"User_email_key\" exists",
         "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
         "params": [
-          "user_email_key",
+          "User_email_key",
           "public",
-          "\"public\".\"user\""
+          "\"public\".\"User\""
         ]
       }
     ]
   },
   {
-    "id": "index.timeCard.timeCard_userId_idx_a489d58a",
-    "label": "Create index \"timeCard_userId_idx_a489d58a\" on \"timeCard\"",
+    "id": "index.TimeCard.TimeCard_userId_idx_a489d58a",
+    "label": "Create index \"TimeCard_userId_idx_a489d58a\" on \"TimeCard\"",
     "operationClass": "additive",
     "target": {
       "id": "postgres",
       "details": {
         "schema": "public",
         "objectType": "index",
-        "name": "timeCard_userId_idx_a489d58a",
-        "table": "timeCard"
+        "name": "TimeCard_userId_idx_a489d58a",
+        "table": "TimeCard"
       }
     },
     "precheck": [
       {
-        "description": "ensure index \"timeCard_userId_idx_a489d58a\" does not exist",
+        "description": "ensure index \"TimeCard_userId_idx_a489d58a\" does not exist",
         "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
         "params": [
-          "\"public\".\"timeCard_userId_idx_a489d58a\""
+          "\"public\".\"TimeCard_userId_idx_a489d58a\""
         ]
       }
     ],
     "execute": [
       {
-        "description": "create index \"timeCard_userId_idx_a489d58a\"",
-        "sql": "CREATE INDEX \"timeCard_userId_idx_a489d58a\" ON \"public\".\"timeCard\" (\"userId\")",
+        "description": "create index \"TimeCard_userId_idx_a489d58a\"",
+        "sql": "CREATE INDEX \"TimeCard_userId_idx_a489d58a\" ON \"public\".\"TimeCard\" (\"userId\")",
         "params": []
       }
     ],
     "postcheck": [
       {
-        "description": "verify index \"timeCard_userId_idx_a489d58a\" exists",
+        "description": "verify index \"TimeCard_userId_idx_a489d58a\" exists",
         "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
         "params": [
-          "\"public\".\"timeCard_userId_idx_a489d58a\""
+          "\"public\".\"TimeCard_userId_idx_a489d58a\""
         ]
       }
     ]
   },
   {
-    "id": "foreignKey.timeCard.timeCard_userId_fkey",
-    "label": "Add foreign key \"timeCard_userId_fkey\" on \"timeCard\"",
+    "id": "foreignKey.TimeCard.TimeCard_userId_fkey",
+    "label": "Add foreign key \"TimeCard_userId_fkey\" on \"TimeCard\"",
     "operationClass": "additive",
     "target": {
       "id": "postgres",
       "details": {
         "schema": "public",
         "objectType": "foreignKey",
-        "name": "timeCard_userId_fkey",
-        "table": "timeCard"
+        "name": "TimeCard_userId_fkey",
+        "table": "TimeCard"
       }
     },
     "precheck": [
       {
-        "description": "ensure FK \"timeCard_userId_fkey\" does not exist",
+        "description": "ensure FK \"TimeCard_userId_fkey\" does not exist",
         "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
         "params": [
-          "timeCard_userId_fkey",
+          "TimeCard_userId_fkey",
           "public",
-          "\"public\".\"timeCard\""
+          "\"public\".\"TimeCard\""
         ]
       }
     ],
     "execute": [
       {
-        "description": "add FK \"timeCard_userId_fkey\"",
-        "sql": "ALTER TABLE \"public\".\"timeCard\"\nADD CONSTRAINT \"timeCard_userId_fkey\"\nFOREIGN KEY (\"userId\")\nREFERENCES \"public\".\"user\" (\"id\")"
+        "description": "add FK \"TimeCard_userId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"TimeCard\"\nADD CONSTRAINT \"TimeCard_userId_fkey\"\nFOREIGN KEY (\"userId\")\nREFERENCES \"public\".\"User\" (\"id\")"
       }
     ],
     "postcheck": [
       {
-        "description": "verify FK \"timeCard_userId_fkey\" exists",
+        "description": "verify FK \"TimeCard_userId_fkey\" exists",
         "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
         "params": [
-          "timeCard_userId_fkey",
+          "TimeCard_userId_fkey",
           "public",
-          "\"public\".\"timeCard\""
+          "\"public\".\"TimeCard\""
         ]
       }
     ]

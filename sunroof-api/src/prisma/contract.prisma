@@ -3,8 +3,6 @@ model User {
   id        String                     @id @default(uuid())
   email     String                     @unique
   name      String
-  costPerHour Float
-  priceToCustomerPerHour Float
   timecards TimeCard[]
   createdAt TimestamptzString          @default(now())
   updatedAt temporal.updatedAtString()

@@ -16,20 +16,14 @@ const users = await db.orm.public.User.createAll([
   {
     email: 'kevin@example.com',
     name: 'Kevin',
-    costPerHour: 25,
-    priceToCustomerPerHour: 50,
   },
   {
     email: 'john@example.com',
     name: 'John',
-    costPerHour: 25,
-    priceToCustomerPerHour: 50,
   },
   {
     email: 'sarah@example.com',
     name: 'Sarah',
-    costPerHour: 25,
-    priceToCustomerPerHour: 50,
   },
 ]);
 

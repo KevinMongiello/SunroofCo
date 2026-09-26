@@ -4,11 +4,11 @@
   "target": "postgres",
   "profileHash": "3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2",
   "roots": {
-    "timeCard": {
+    "TimeCard": {
       "model": "TimeCard",
       "namespace": "public"
     },
-    "user": {
+    "User": {
       "model": "User",
       "namespace": "public"
     }
@@ -102,18 +102,11 @@
                 }
               },
               "namespaceId": "public",
-              "table": "timeCard"
+              "table": "TimeCard"
             }
           },
           "User": {
             "fields": {
-              "costPerHour": {
-                "nullable": false,
-                "type": {
-                  "codecId": "pg/float8@1",
-                  "kind": "scalar"
-                }
-              },
               "createdAt": {
                 "nullable": false,
                 "type": {
@@ -139,13 +132,6 @@
                 "nullable": false,
                 "type": {
                   "codecId": "pg/text@1",
-                  "kind": "scalar"
-                }
-              },
-              "priceToCustomerPerHour": {
-                "nullable": false,
-                "type": {
-                  "codecId": "pg/float8@1",
                   "kind": "scalar"
                 }
               },
@@ -176,9 +162,6 @@
             },
             "storage": {
               "fields": {
-                "costPerHour": {
-                  "column": "costPerHour"
-                },
                 "createdAt": {
                   "column": "createdAt"
                 },
@@ -191,15 +174,12 @@
                 "name": {
                   "column": "name"
                 },
-                "priceToCustomerPerHour": {
-                  "column": "priceToCustomerPerHour"
-                },
                 "updatedAt": {
                   "column": "updatedAt"
                 }
               },
               "namespaceId": "public",
-              "table": "user"
+              "table": "User"
             }
           }
         }
@@ -211,7 +191,7 @@
       "public": {
         "entries": {
           "table": {
-            "timeCard": {
+            "TimeCard": {
               "columns": {
                 "createdAt": {
                   "codecId": "pg/timestamptz-string@1",
@@ -255,14 +235,14 @@
                       "userId"
                     ],
                     "namespaceId": "public",
-                    "tableName": "timeCard"
+                    "tableName": "TimeCard"
                   },
                   "target": {
                     "columns": [
                       "id"
                     ],
                     "namespaceId": "public",
-                    "tableName": "user"
+                    "tableName": "User"
                   }
                 }
               ],
@@ -271,8 +251,8 @@
                   "columns": [
                     "userId"
                   ],
-                  "name": "timeCard_userId_idx_a489d58a",
-                  "prefix": "timeCard_userId_idx",
+                  "name": "TimeCard_userId_idx_a489d58a",
+                  "prefix": "TimeCard_userId_idx",
                   "unique": false
                 }
               ],
@@ -283,13 +263,8 @@
               },
               "uniques": []
             },
-            "user": {
+            "User": {
               "columns": {
-                "costPerHour": {
-                  "codecId": "pg/float8@1",
-                  "nativeType": "float8",
-                  "nullable": false
-                },
                 "createdAt": {
                   "codecId": "pg/timestamptz-string@1",
                   "default": {
@@ -312,11 +287,6 @@
                 "name": {
                   "codecId": "pg/text@1",
                   "nativeType": "text",
-                  "nullable": false
-                },
-                "priceToCustomerPerHour": {
-                  "codecId": "pg/float8@1",
-                  "nativeType": "float8",
                   "nullable": false
                 },
                 "updatedAt": {
@@ -346,10 +316,10 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "f9ffe47ab81c36d57cbda9f696c9d0134850bb1fab4e8d16f64fb3ac167270dc"
+    "storageHash": "80aa7f6b2ddfdaa2f5e2f6ff9f5b06c315e6480a754e8c73be3b5ed4a64249fa"
   },
   "execution": {
-    "executionHash": "51f95809d23d311f8dc0552545d152e4101a1d099469044f960346ec8b38ae46",
+    "executionHash": "48abfed2a8dbb6f67b6456ce8ecb98eb3acbb8b06b7682a8773380f1e8e51880",
     "mutations": {
       "defaults": [
         {
@@ -360,7 +330,7 @@
           "ref": {
             "column": "id",
             "namespace": "public",
-            "table": "timeCard"
+            "table": "TimeCard"
           }
         },
         {
@@ -375,7 +345,7 @@
           "ref": {
             "column": "updatedAt",
             "namespace": "public",
-            "table": "timeCard"
+            "table": "TimeCard"
           }
         },
         {
@@ -386,7 +356,7 @@
           "ref": {
             "column": "id",
             "namespace": "public",
-            "table": "user"
+            "table": "User"
           }
         },
         {
@@ -401,7 +371,7 @@
           "ref": {
             "column": "updatedAt",
             "namespace": "public",
-            "table": "user"
+            "table": "User"
           }
         }
       ]
@@ -420,6 +390,8 @@
       "checkConstraint": true,
       "defaultInInsert": true,
       "enums": true,
+      "insertOnConflictSkip": true,
+      "insertOnConflictWithoutTarget": true,
       "lateral": true,
       "returning": true,
       "scalarList": true
