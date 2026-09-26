@@ -25,7 +25,7 @@ export const Dashboard = () => {
   };
 
   useEffect(() => {
-    fetchAllTimeCards({ includeUser: true, limit: 5 }).then(setTimecards);
+    fetchAllTimeCards({ includeUser: true, limit: 5, order: { by: 'date', dir: 'desc'} }).then(setTimecards);
     fetchDashboardStats().then(setDashboardStats)
   }, []);
 

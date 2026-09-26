@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { TimecardsService } from './timecards.service.js';
+import type { TimecardSortDirection, TimeCardSortFields } from './timecards.service.js';
 import { CreateTimecardDto } from './dto/create-timecard.dto.js';
 import type { UpdateTimecardDto } from './dto/update-timecard.dto.js';
 
@@ -10,9 +11,11 @@ export class TimecardsController {
   @Get()
   findAll(
     @Query('includeUser') includeUser?: string,
-    @Query('limit') limit?: string
+    @Query('limit') limit?: string,
+    @Query('orderBy') orderBy?: TimeCardSortFields,
+    @Query('orderDir') orderDir?: TimecardSortDirection
   ) {
-    return this.timecardsService.findAll({ includeUser: includeUser === 'true', limit });
+    return this.timecardsService.findAll({ includeUser: includeUser === 'true', limit, orderBy, orderDir });
   }
 
   @Get(':id')
