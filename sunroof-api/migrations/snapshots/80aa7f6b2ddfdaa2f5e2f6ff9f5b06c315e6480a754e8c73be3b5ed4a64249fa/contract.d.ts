@@ -36,7 +36,7 @@ import type {
 export type StorageHash =
   StorageHashBase<'80aa7f6b2ddfdaa2f5e2f6ff9f5b06c315e6480a754e8c73be3b5ed4a64249fa'>;
 export type ExecutionHash =
-  ExecutionHashBase<'48abfed2a8dbb6f67b6456ce8ecb98eb3acbb8b06b7682a8773380f1e8e51880'>;
+  ExecutionHashBase<'0bc116f2239e02b8158ea5fe4aaf9a883cbe8cf42707393d0ca31b32ae07bbd3'>;
 export type ProfileHash =
   ProfileHashBase<'3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2'>;
 
@@ -342,8 +342,7 @@ export namespace Models {
     id: CodecTypes['pg/text@1']['output'];
     name: CodecTypes['pg/text@1']['output'];
     updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
-    timecards: public_TimeCard[];
-    readonly [RelationKeys]?: 'timecards';
+    readonly [RelationKeys]?: never;
   };
 }
 
@@ -569,19 +568,7 @@ type ContractBase = Omit<
                 };
               };
             };
-            readonly relations: {
-              readonly timecards: {
-                readonly to: {
-                  readonly namespace: 'public' & NamespaceId;
-                  readonly model: 'TimeCard';
-                };
-                readonly cardinality: '1:N';
-                readonly on: {
-                  readonly localFields: readonly ['id'];
-                  readonly targetFields: readonly ['userId'];
-                };
-              };
-            };
+            readonly relations: Record<string, never>;
             readonly storage: {
               readonly table: 'User';
               readonly namespaceId: 'public';
@@ -626,35 +613,35 @@ type ContractBase = Omit<
         {
           readonly onCreate: { readonly id: 'uuidv4'; readonly kind: 'generator' };
           readonly ref: {
-            readonly column: 'id';
+            readonly entry: 'TimeCard';
+            readonly field: 'id';
             readonly namespace: 'public';
-            readonly table: 'TimeCard';
           };
         },
         {
           readonly onCreate: { readonly id: 'timestampNow'; readonly kind: 'generator' };
           readonly onUpdate: { readonly id: 'timestampNow'; readonly kind: 'generator' };
           readonly ref: {
-            readonly column: 'updatedAt';
+            readonly entry: 'TimeCard';
+            readonly field: 'updatedAt';
             readonly namespace: 'public';
-            readonly table: 'TimeCard';
           };
         },
         {
           readonly onCreate: { readonly id: 'uuidv4'; readonly kind: 'generator' };
           readonly ref: {
-            readonly column: 'id';
+            readonly entry: 'User';
+            readonly field: 'id';
             readonly namespace: 'public';
-            readonly table: 'User';
           };
         },
         {
           readonly onCreate: { readonly id: 'timestampNow'; readonly kind: 'generator' };
           readonly onUpdate: { readonly id: 'timestampNow'; readonly kind: 'generator' };
           readonly ref: {
-            readonly column: 'updatedAt';
+            readonly entry: 'User';
+            readonly field: 'updatedAt';
             readonly namespace: 'public';
-            readonly table: 'User';
           };
         },
       ];

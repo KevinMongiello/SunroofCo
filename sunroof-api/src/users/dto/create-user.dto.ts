@@ -1,6 +1,6 @@
 export class CreateUserDto {
   email: string;
   name: string;
-  costPerHour: number;
-  priceToCustomerPerHour: number;
+  costPerHour?: number;
+  priceToCustomerPerHour?: number;
 }

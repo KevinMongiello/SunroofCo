@@ -1,6 +1,2 @@
-export class UpdateUserDto {
-  email?: string;
-  name?: string;
-  costPerHour?: number;
-  priceToCustomerPerHour?: number;
-}
+import { CreateUserDto } from "./create-user.dto";
+export type UpdateUserDto = Partial<CreateUserDto>

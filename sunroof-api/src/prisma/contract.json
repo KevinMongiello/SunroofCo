@@ -107,6 +107,13 @@
           },
           "User": {
             "fields": {
+              "costPerHour": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/float8@1",
+                  "kind": "scalar"
+                }
+              },
               "createdAt": {
                 "nullable": false,
                 "type": {
@@ -135,6 +142,13 @@
                   "kind": "scalar"
                 }
               },
+              "priceToCustomerPerHour": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/float8@1",
+                  "kind": "scalar"
+                }
+              },
               "updatedAt": {
                 "nullable": false,
                 "type": {
@@ -143,25 +157,12 @@
                 }
               }
             },
-            "relations": {
-              "timecards": {
-                "cardinality": "1:N",
-                "on": {
-                  "localFields": [
-                    "id"
-                  ],
-                  "targetFields": [
-                    "userId"
-                  ]
-                },
-                "to": {
-                  "model": "TimeCard",
-                  "namespace": "public"
-                }
-              }
-            },
+            "relations": {},
             "storage": {
               "fields": {
+                "costPerHour": {
+                  "column": "costPerHour"
+                },
                 "createdAt": {
                   "column": "createdAt"
                 },
@@ -173,6 +174,9 @@
                 },
                 "name": {
                   "column": "name"
+                },
+                "priceToCustomerPerHour": {
+                  "column": "priceToCustomerPerHour"
                 },
                 "updatedAt": {
                   "column": "updatedAt"
@@ -265,6 +269,15 @@
             },
             "User": {
               "columns": {
+                "costPerHour": {
+                  "codecId": "pg/float8@1",
+                  "default": {
+                    "kind": "literal",
+                    "value": 25
+                  },
+                  "nativeType": "float8",
+                  "nullable": false
+                },
                 "createdAt": {
                   "codecId": "pg/timestamptz-string@1",
                   "default": {
@@ -287,6 +300,15 @@
                 "name": {
                   "codecId": "pg/text@1",
                   "nativeType": "text",
+                  "nullable": false
+                },
+                "priceToCustomerPerHour": {
+                  "codecId": "pg/float8@1",
+                  "default": {
+                    "kind": "literal",
+                    "value": 50
+                  },
+                  "nativeType": "float8",
                   "nullable": false
                 },
                 "updatedAt": {
@@ -316,10 +338,10 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "80aa7f6b2ddfdaa2f5e2f6ff9f5b06c315e6480a754e8c73be3b5ed4a64249fa"
+    "storageHash": "31708ee3f670d3f57ae978761ce187e997be2262e2d81476990d5821480c1073"
   },
   "execution": {
-    "executionHash": "48abfed2a8dbb6f67b6456ce8ecb98eb3acbb8b06b7682a8773380f1e8e51880",
+    "executionHash": "0bc116f2239e02b8158ea5fe4aaf9a883cbe8cf42707393d0ca31b32ae07bbd3",
     "mutations": {
       "defaults": [
         {
@@ -328,9 +350,9 @@
             "kind": "generator"
           },
           "ref": {
-            "column": "id",
-            "namespace": "public",
-            "table": "TimeCard"
+            "entry": "TimeCard",
+            "field": "id",
+            "namespace": "public"
           }
         },
         {
@@ -343,9 +365,9 @@
             "kind": "generator"
           },
           "ref": {
-            "column": "updatedAt",
-            "namespace": "public",
-            "table": "TimeCard"
+            "entry": "TimeCard",
+            "field": "updatedAt",
+            "namespace": "public"
           }
         },
         {
@@ -354,9 +376,9 @@
             "kind": "generator"
           },
           "ref": {
-            "column": "id",
-            "namespace": "public",
-            "table": "User"
+            "entry": "User",
+            "field": "id",
+            "namespace": "public"
           }
         },
         {
@@ -369,9 +391,9 @@
             "kind": "generator"
           },
           "ref": {
-            "column": "updatedAt",
-            "namespace": "public",
-            "table": "User"
+            "entry": "User",
+            "field": "updatedAt",
+            "namespace": "public"
           }
         }
       ]

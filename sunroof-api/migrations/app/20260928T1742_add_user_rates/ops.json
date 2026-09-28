@@ -1,0 +1,86 @@
+[
+  {
+    "id": "column.public.User.costPerHour",
+    "label": "Add column \"costPerHour\" to \"User\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "costPerHour",
+        "table": "User"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"costPerHour\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "User",
+          "costPerHour"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"costPerHour\"",
+        "sql": "ALTER TABLE \"public\".\"User\" ADD COLUMN \"costPerHour\" float8 DEFAULT 25 NOT NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"costPerHour\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "User",
+          "costPerHour"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.User.priceToCustomerPerHour",
+    "label": "Add column \"priceToCustomerPerHour\" to \"User\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "priceToCustomerPerHour",
+        "table": "User"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"priceToCustomerPerHour\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "User",
+          "priceToCustomerPerHour"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"priceToCustomerPerHour\"",
+        "sql": "ALTER TABLE \"public\".\"User\" ADD COLUMN \"priceToCustomerPerHour\" float8 DEFAULT 50 NOT NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"priceToCustomerPerHour\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "User",
+          "priceToCustomerPerHour"
+        ]
+      }
+    ]
+  }
+]
