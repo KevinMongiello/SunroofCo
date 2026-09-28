@@ -7,8 +7,8 @@ import { UpdateUserDto } from './dto/update-user.dto.js';
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
-  findAll() {
-    return this.prisma.db.orm.public.User.all();
+  async findAll() {
+    return await this.prisma.db.orm.public.User.all();
   }
 
   findOne(id: string) {

@@ -8,6 +8,8 @@ interface UserTableProps {
   onDelete: (userId: string) => void;
 }
 
+const toDollars = (num: number) => `$${num}`;
+
 export const UserTable = ({ users, onEdit, onDelete }: UserTableProps) => (
   <Table
     rows={users || []}
@@ -19,6 +21,14 @@ export const UserTable = ({ users, onEdit, onDelete }: UserTableProps) => (
       {
         header: "Email",
         render: (user) => user.email,
+      },
+      {
+        header: "Cost / hr",
+        render: (user) => toDollars(user.costPerHour),
+      },
+      {
+        header: "Customer Price / hr",
+        render: (user) => toDollars(user.costPerHour),
       },
       {
         header: "Actions",
