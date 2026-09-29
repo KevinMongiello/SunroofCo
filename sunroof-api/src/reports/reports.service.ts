@@ -26,17 +26,28 @@ export class ReportsService {
 
   async dashboard() {
     const [startOfWeek, startOfNextWeek] = getWeek();
-    const userStats = await this.prisma.db.orm.public.User.aggregate((agg) => ({
-      totalUsers: agg.count(),
-    }));
-    const timecardStats = await this.prisma.db.orm.public.TimeCard
-    .where(t => t.date.gte(startOfWeek))
-    .where(t => t.date.lt(startOfNextWeek))
-    .aggregate((agg) => ({
-      totalHoursThisWeek: agg.sum('hoursWorked'),
-      totalTimecards: agg.count(),
-    }));
+    const userStatsAgg = await this.prisma.db.orm.public.User.aggregate(
+      (agg) => ({
+        totalUsers: agg.count(),
+      }),
+    );
+    const totalHoursAgg = await this.prisma.db.orm.public.TimeCard.where((t) =>
+      t.date.gte(startOfWeek),
+    )
+      .where((t) => t.date.lt(startOfNextWeek))
+      .aggregate((agg) => ({
+        totalHoursThisWeek: agg.sum('hoursWorked'),
+      }));
 
-    return { ...userStats, ...timecardStats, totalHoursThisWeek: timecardStats.totalHoursThisWeek ?? 0 };
+    const totalTimecardsAgg =
+      await this.prisma.db.orm.public.TimeCard.aggregate((agg) => ({
+        totalTimecards: agg.count(),
+      }));
+
+    return {
+      totalUsers: userStatsAgg.totalUsers ?? 0,
+      totalTimeCards: totalTimecardsAgg.totalTimecards ?? 0,
+      totalHoursThisWeek: totalHoursAgg.totalHoursThisWeek ?? 0,
+    };
   }
 }

@@ -11,7 +11,7 @@ import { fetchDashboardStats } from "../api/reports";
 
 interface DashboardStats {
   totalUsers: number;
-  totalTimecards: number;
+  totalTimeCards: number;
   totalHoursThisWeek: number;
 }
 
@@ -35,7 +35,7 @@ export const Dashboard = () => {
   return (
     <>
       <AppHeader h1="Dashboard" h2="Here's what's happening with your team." />
-      <QuickStats totalUsers={dashboardStats?.totalUsers} totalTimecards={dashboardStats?.totalTimecards} totalHoursThisWeek={dashboardStats?.totalHoursThisWeek} />
+      <QuickStats totalUsers={dashboardStats?.totalUsers} totalTimecards={dashboardStats?.totalTimeCards} totalHoursThisWeek={dashboardStats?.totalHoursThisWeek} />
       <div className="dashboard-bottom">
         <RecentTimecards timecards={timecards} onViewAll={onViewAll} />
         <QuickActions onAddUser={onAddUser} onAddTimecard={onAddTimecard} />
