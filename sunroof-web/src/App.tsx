@@ -2,9 +2,10 @@ import { Routes, Route } from 'react-router-dom';
 import { UsersPage } from './pages/UsersPage';
 import { UserFormPage } from './pages/UserFormPage';
 import { AppLayout } from './pages/AppLayout';
-import './App.scss';
 import { Dashboard } from './pages/Dashboard';
 import { TimecardsPage } from './pages/TimecardsPage';
+import { TimecardFormPage } from './pages/TimecardFormPage';
+import './App.scss';
 
 function App() {
   return (
@@ -15,6 +16,8 @@ function App() {
         <Route path="/users/new" element={<UserFormPage />} />
         <Route path="/users/:id/edit" element={<UserFormPage />} />
         <Route path="/timecards" element={<TimecardsPage />} />
+        <Route path="/timecards/new" element={<TimecardFormPage />} />
+        <Route path="/timecards/:id/edit" element={<TimecardFormPage />} />
       </Route>
     </Routes>
   );

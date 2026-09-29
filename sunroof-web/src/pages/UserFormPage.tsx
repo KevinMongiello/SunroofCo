@@ -2,10 +2,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import { UserForm } from "../components/UserForm";
 import { createUser, fetchUser, updateUser } from "../api/users";
-import type { User } from "../types/user";
+import type { User, CreateUser } from "../types/user";
 import { ArrowLeft } from "lucide-react";
-
-type UserFormData = Pick<User, "name" | "email">;
 
 export const UserFormPage = () => {
   const { id } = useParams();
@@ -24,12 +22,9 @@ export const UserFormPage = () => {
     }
   }, [id]);
 
-  const onSubmit = useCallback(async (data: UserFormData) => {
+  const onSubmit = useCallback(async (data: CreateUser) => {
     if (id) {
-      await updateUser({
-        ...data,
-        id,
-      });
+      await updateUser(id, data);
     } else {
       await createUser(data);
     }

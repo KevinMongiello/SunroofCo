@@ -1,4 +1,4 @@
-import type { CreateUser, User } from "../types/user";
+import type { CreateUser } from "../types/user";
 const USERS_PATH = "http://localhost:3000/users/";
 
 export const fetchAllUsers = async () => {
@@ -37,8 +37,8 @@ export const deleteUser = async (userId: string) => {
   return resp.json();
 };
 
-export const updateUser = async (data: User) => {
-  const resp = await fetch(USERS_PATH + data.id, {
+export const updateUser = async (id: string, data: CreateUser) => {
+  const resp = await fetch(USERS_PATH + id, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

@@ -9,3 +9,7 @@ export interface TimeCard {
 
 export type TimeCardWithUser = TimeCard & { user: User}
 
+export type CreateTimeCard = Omit<TimeCard, 'id'>
+export type CreateTimeCardForm = Omit<TimeCard, 'id' | 'userId'>
+
+export type UpdateTimecard = Partial<Omit<TimeCard, 'id'>>
