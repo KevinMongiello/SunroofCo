@@ -33,14 +33,14 @@ export const UserTable = ({ users, onEdit, onDelete }: UserTableProps) => (
       {
         header: "Actions",
         render: (user) => (
-          <td className="actions">
+          <div className="actions">
             <button onClick={() => onEdit(user)}>
               <Pencil size={16} />
             </button>
             <button className="delete" onClick={() => onDelete(user.id)}>
               <Trash2 size={16} />
             </button>
-          </td>
+          </div>
         ),
       },
     ]}

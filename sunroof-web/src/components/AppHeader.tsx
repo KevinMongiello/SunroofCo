@@ -14,7 +14,7 @@ export const AppHeader = ({ h1, h2, buttonConfigs = [] }: AppHeaderProps) => {
       {buttonConfigs?.length > 0 ? (
         <div>
           {buttonConfigs.map((config) => (
-            <button className='primary' onClick={config.onClick}>{config.label}</button>
+            <button key={config.label} className='primary' onClick={config.onClick}>{config.label}</button>
           ))}
         </div>
       ) : null}
