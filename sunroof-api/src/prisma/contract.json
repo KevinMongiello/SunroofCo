@@ -157,7 +157,23 @@
                 }
               }
             },
-            "relations": {},
+            "relations": {
+              "timecards": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "userId"
+                  ]
+                },
+                "to": {
+                  "model": "TimeCard",
+                  "namespace": "public"
+                }
+              }
+            },
             "storage": {
               "fields": {
                 "costPerHour": {

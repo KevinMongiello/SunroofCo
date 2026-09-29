@@ -16,7 +16,7 @@ interface findAllOptions {
 export class TimecardsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  findAll(options: findAllOptions = {}) {
+  async findAll(options: findAllOptions = {}) {
     const { limit, includeUser, orderBy, orderDir } = options;
     let query = this.prisma.db.orm.public.TimeCard;
     if (includeUser) query = query.include('user');
@@ -25,7 +25,7 @@ export class TimecardsService {
       query = query.orderBy((timecard) =>
         timecard[orderBy][orderDir || 'asc'](),
       );
-    return query.all();
+    return await query.all();
   }
 
   findOne(id: string) {

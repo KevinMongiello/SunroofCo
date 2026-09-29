@@ -5,6 +5,7 @@ model User {
   name      String
   costPerHour Float @default(25)
   priceToCustomerPerHour Float @default(50)
+  timecards TimeCard[]
   createdAt TimestamptzString          @default(now())
   updatedAt temporal.updatedAtString()
 }

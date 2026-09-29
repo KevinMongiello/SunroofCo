@@ -352,7 +352,8 @@ export namespace Models {
     name: CodecTypes['pg/text@1']['output'];
     priceToCustomerPerHour: CodecTypes['pg/float8@1']['output'];
     updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
-    readonly [RelationKeys]?: never;
+    timecards: public_TimeCard[];
+    readonly [RelationKeys]?: 'timecards';
   };
 }
 
@@ -604,7 +605,19 @@ type ContractBase = Omit<
                 };
               };
             };
-            readonly relations: Record<string, never>;
+            readonly relations: {
+              readonly timecards: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'TimeCard';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['id'];
+                  readonly targetFields: readonly ['userId'];
+                };
+              };
+            };
             readonly storage: {
               readonly table: 'User';
               readonly namespaceId: 'public';

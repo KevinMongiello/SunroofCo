@@ -9,13 +9,13 @@ export class TimecardsController {
   constructor(private readonly timecardsService: TimecardsService) {}
 
   @Get()
-  findAll(
+  async findAll(
     @Query('includeUser') includeUser?: string,
     @Query('limit') limit?: string,
     @Query('orderBy') orderBy?: TimeCardSortFields,
     @Query('orderDir') orderDir?: TimecardSortDirection
   ) {
-    return this.timecardsService.findAll({ includeUser: includeUser === 'true', limit, orderBy, orderDir });
+    return await this.timecardsService.findAll({ includeUser: includeUser === 'true', limit, orderBy, orderDir });
   }
 
   @Get(':id')
