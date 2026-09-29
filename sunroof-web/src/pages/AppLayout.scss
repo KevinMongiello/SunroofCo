@@ -1,13 +1,15 @@
 .app-layout {
   display: flex;
   flex-direction: row;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .app-content__shell {
   flex: 1;
   min-width: 0;
   background: rgb(250, 250, 250);
+  overflow-y: auto;
 }
 
 .app-content {
