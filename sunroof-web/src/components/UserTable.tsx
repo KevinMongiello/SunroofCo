@@ -28,7 +28,7 @@ export const UserTable = ({ users, onEdit, onDelete }: UserTableProps) => (
       },
       {
         header: "Customer Price / hr",
-        render: (user) => toDollars(user.costPerHour),
+        render: (user) => toDollars(user.priceToCustomerPerHour),
       },
       {
         header: "Actions",
