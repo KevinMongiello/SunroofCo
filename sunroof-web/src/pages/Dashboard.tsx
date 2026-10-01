@@ -34,7 +34,7 @@ export const Dashboard = () => {
   console.log({dashboardStats})
   return (
     <>
-      <AppHeader h1="Dashboard" h2="Here's what's happening with your team." />
+      <AppHeader h1Text="Dashboard" h2Text="Here's what's happening with your team." />
       <QuickStats totalUsers={dashboardStats?.totalUsers} totalTimecards={dashboardStats?.totalTimeCards} totalHoursThisWeek={dashboardStats?.totalHoursThisWeek} />
       <div className="dashboard-bottom">
         <RecentTimecards timecards={timecards} onViewAll={onViewAll} />

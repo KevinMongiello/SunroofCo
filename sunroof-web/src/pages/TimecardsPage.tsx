@@ -27,14 +27,13 @@ export const TimecardsPage = () => {
 
   const buttonConfigs = [
     { onClick: () => navigate("/timecards/new"), label: "+ Add Timecard" },
-    { onClick: () => {}, label: "hi there" },
   ];
 
   return (
     <>
       <AppHeader
-        h1="Timecards"
-        h2="View and manage time entries."
+        h1Text="Timecards"
+        h2Text="View and manage time entries."
         buttonConfigs={buttonConfigs}
       />
       <TimecardsTable

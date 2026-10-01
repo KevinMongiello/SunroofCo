@@ -1,30 +1,32 @@
+import "./Form.scss";
+
 interface FieldConfig<T> {
   id: string;
   label: string;
   inputType: string;
-  onChange: (val: string) => void;
   validation?: any;
   placeholder?: string;
   value: T;
+  onChange: (val: string) => void;
 }
 
 interface DynamicFormConfig<T> {
   fieldConfigs: FieldConfig<T>[];
-  onSubmit: (e: React.SubmitEvent) => void;
-  onCancel: (e: React.MouseEvent) => void;
   submitLabel: string;
   cancelLabel: string;
+  onSubmit: (e: React.SubmitEvent) => void;
+  onCancel: (e: React.MouseEvent) => void;
 }
 
 export function DynamicForm({
   fieldConfigs,
-  onSubmit,
-  onCancel,
   submitLabel,
   cancelLabel,
+  onSubmit,
+  onCancel,
 }: DynamicFormConfig<number | string>) {
   const fields = fieldConfigs.map((fieldConfig) => (
-    <div>
+    <div className="form-field">
       <label htmlFor={fieldConfig.id}>{fieldConfig.label}</label>
       <input
         id={fieldConfig.id}
@@ -38,10 +40,18 @@ export function DynamicForm({
   return (
     <form onSubmit={onSubmit}>
       {fields}
-      <button type="button" onClick={onCancel}>
-        {cancelLabel}
-      </button>
-      <button type="submit">{submitLabel}</button>
+      <div className="form-actions">
+        <button
+          type="button"
+          onClick={onCancel}
+          className="button button--secondary"
+        >
+          {cancelLabel}
+        </button>
+        <button type="submit" className="button button--primary">
+          {submitLabel}
+        </button>
+      </div>
     </form>
   );
 }

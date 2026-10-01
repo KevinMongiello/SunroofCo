@@ -32,10 +32,10 @@ export const TimecardsTable = ({
         header: "Actions",
         render: (timecard) => (
           <div className="actions">
-            <button onClick={() => onEdit(timecard)}>
+            <button onClick={() => onEdit(timecard)} className="button">
               <Pencil size={16} />
             </button>
-            <button className="delete" onClick={() => onDelete(timecard.id)}>
+            <button className="button delete" onClick={() => onDelete(timecard.id)}>
               <Trash2 size={16} />
             </button>
           </div>

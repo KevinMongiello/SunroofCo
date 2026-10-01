@@ -7,21 +7,21 @@ interface QuickStatsProps {
   totalTimecards?: number;
   totalHoursThisWeek?: number;
 }
-interface CardProps {
-  h1: string;
-  h2: string;
+interface StatCardProps {
+  value: string;
+  label: string;
   icon: LucideIcon;
   className?: string;
 }
 
-const Card = ({ h1, h2, icon: Icon, className }: CardProps) => (
-  <div className={cn("card paper", className)}>
+const StatCard = ({ value, label, icon: Icon, className }: StatCardProps) => (
+  <div className={cn("stat-card paper", className)}>
     <div className="icon">
       <Icon size={48} />
     </div>
-    <div className="card-right">
-      <h1>{h1}</h1>
-      <h2>{h2}</h2>
+    <div className="stat-card-right">
+      <p className="stat-card-value">{value}</p>
+      <p className='stat-card-label'>{label}</p>
     </div>
   </div>
 );
@@ -33,21 +33,21 @@ export const QuickStats = ({
 }: QuickStatsProps) => {
   return (
     <div className="quick-stats">
-      <Card
-        h1={totalUsers?.toString() ?? '--'}
-        h2="Total Users"
+      <StatCard
+        value={totalUsers?.toString() ?? '--'}
+        label="Total Users"
         icon={User}
         className="blue"
       />
-      <Card
-        h1={totalTimecards?.toString() ?? '--'}
-        h2="Total Timecards"
+      <StatCard
+        value={totalTimecards?.toString() ?? '--'}
+        label="Total Timecards"
         icon={FileText}
         className="blue"
       />
-      <Card
-        h1={totalHoursThisWeek?.toString() ?? '--'}
-        h2="Hours This Week"
+      <StatCard
+        value={totalHoursThisWeek?.toString() ?? '--'}
+        label="Hours This Week"
         icon={Clock}
         className="green"
       />

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { UserForm } from "../components/UserForm";
 import { createUser, fetchUser, updateUser } from "../api/users";
 import type { User, CreateUser } from "../types/user";
-import { ArrowLeft } from "lucide-react";
+import { AppHeader } from "../components/AppHeader";
 
 export const UserFormPage = () => {
   const { id } = useParams();
@@ -38,10 +38,10 @@ export const UserFormPage = () => {
 
   return (
     <main>
-      <button type="button" onClick={() => toUsersPage()}>
-        <ArrowLeft size={18} />
-      </button>
-      <h1>{isEditing ? "Update User" : "Create User"}</h1>
+      <AppHeader 
+        navBack={toUsersPage}
+        h1Text={isEditing ? "Update User" : "Create User"}
+      />
       <UserForm
         onSubmit={onSubmit}
         initialValues={initialValues}

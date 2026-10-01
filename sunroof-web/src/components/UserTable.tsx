@@ -34,10 +34,10 @@ export const UserTable = ({ users, onEdit, onDelete }: UserTableProps) => (
         header: "Actions",
         render: (user) => (
           <div className="actions">
-            <button onClick={() => onEdit(user)}>
+            <button className="button" onClick={() => onEdit(user)}>
               <Pencil size={16} />
             </button>
-            <button className="delete" onClick={() => onDelete(user.id)}>
+            <button className="button delete" onClick={() => onDelete(user.id)}>
               <Trash2 size={16} />
             </button>
           </div>

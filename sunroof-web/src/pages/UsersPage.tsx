@@ -27,15 +27,14 @@ export const UsersPage = () => {
   }, []);
 
   const buttonConfigs = [
-    { onClick: () => navigate("/users/new"), label: "+ Add User" },
-    { onClick: () => {}, label: "hi there" },
+    { onClick: () => navigate("/users/new"), label: "+ Add User" }
   ];
 
   return (
     <>
       <AppHeader
-        h1="Users"
-        h2="Manage team members and their information."
+        h1Text="Users"
+        h2Text="Manage team members and their information."
         buttonConfigs={buttonConfigs}
       />
       <UserTable users={users} onEdit={onEdit} onDelete={onDelete} />
