@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import { UserForm } from "../components/UserForm";
 import { createUser, fetchUser, updateUser } from "../api/users";
@@ -8,8 +8,11 @@ import { AppHeader } from "../components/AppHeader";
 export const UserFormPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
-  const toUsersPage = () => navigate("/users");
+  const returnTo = searchParams.get("returnTo") ?? "/users";
+  const toNavBack = () => navigate(returnTo);
+  const toUsersPage = () => navigate('/users');
 
   const isEditing = !!id;
   const [initialValues, setInitialValues] = useState<User | null>(null);
@@ -38,14 +41,14 @@ export const UserFormPage = () => {
 
   return (
     <main>
-      <AppHeader 
-        navBack={toUsersPage}
+      <AppHeader
+        navBack={toNavBack}
         h1Text={isEditing ? "Update User" : "Create User"}
       />
       <UserForm
         onSubmit={onSubmit}
         initialValues={initialValues}
-        onCancel={() => toUsersPage()}
+        onCancel={() => toNavBack()}
         submitLabel={isEditing ? "Update User" : "Create User"}
       ></UserForm>
     </main>

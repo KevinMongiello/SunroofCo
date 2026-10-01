@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import type { CreateTimeCardForm, TimeCard } from "../types/timecards";
 import {
@@ -18,8 +18,11 @@ let DEFAULT_USER_ID = "0000-0000-0000-00000";
 export const TimecardFormPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
-  const toTimecardsPage = () => navigate("/timecards");
+  const returnTo = searchParams.get("returnTo") ?? "/timecards";
+  const toNavBack = () => navigate(returnTo);
+  const toTimecardsPage = () => navigate('/timecards');
 
   const isEditing = !!id;
   const [initialValues, setInitialValues] = useState<TimeCard | null>(null);
@@ -57,14 +60,14 @@ export const TimecardFormPage = () => {
   return (
     <main>
       <AppHeader
-        navBack={toTimecardsPage}
+        navBack={toNavBack}
         h1Text={isEditing ? "Update Timecard" : "Create Timecard"}
       />
       <TimecardForm
-        onSubmit={onSubmit}
         initialValues={initialValues}
-        onCancel={() => toTimecardsPage()}
         submitLabel={isEditing ? "Update Timecard" : "Create Timecard"}
+        onSubmit={onSubmit}
+        onCancel={() => toNavBack()}
       ></TimecardForm>
     </main>
   );

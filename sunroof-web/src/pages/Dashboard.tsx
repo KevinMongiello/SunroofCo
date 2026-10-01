@@ -29,8 +29,8 @@ export const Dashboard = () => {
     fetchDashboardStats().then(setDashboardStats)
   }, []);
 
-  const onAddUser = () => navigate("/users/new");
-  const onAddTimecard = () => navigate("/timecards/new");
+  const onAddUser = () => navigate("/users/new?returnTo=/");
+  const onAddTimecard = () => navigate("/timecards/new?returnTo=/");
   console.log({dashboardStats})
   return (
     <>
