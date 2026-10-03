@@ -22,29 +22,6 @@
   margin: 0 auto;
 }
 
-.app-drawer {
-  width: 240px;
-  flex-shrink: 0;
-
-  display: flex;
-  flex-direction: column;
-
-  justify-content: space-between;
-  nav {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    button {
-      width: 50%;
-      padding: 0.5rem 0;
-      margin: 0.5rem 0;
-    }
-  }
-  h1 {
-    font-size: 2em;
-  }
-}
-
 .drawer-bottom {
   width: 100%;
   height: 4em;

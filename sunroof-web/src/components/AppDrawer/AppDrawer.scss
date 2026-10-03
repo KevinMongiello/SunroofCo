@@ -1,0 +1,76 @@
+.app-drawer {
+  width: 240px;
+  flex-shrink: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-between;
+  .app-drawer-header {
+    padding: 1.5rem 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    color: white;
+  }
+  h1 {
+    font-size: 2em;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+
+    width: 100%;
+
+    .app-header-button {
+      width: 100%;
+      min-height: 44px;
+
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+
+      padding: 0.7rem 0.85rem;
+
+      border: 0;
+      border-radius: 8px;
+
+      background: transparent;
+      color: #f8fafc;
+
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-align: left;
+      text-decoration: none;
+
+      cursor: pointer;
+
+      transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
+
+      svg {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+      }
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      &:focus-visible {
+        outline: 2px solid rgba(255, 255, 255, 0.7);
+        outline-offset: 2px;
+      }
+
+      &--active {
+        background: #31445a;
+        color: white;
+        font-weight: 600;
+      }
+    }
+  }
+}
