@@ -7,9 +7,9 @@ export const AppLayout = () => {
     <div className="app-layout">
       <AppDrawer />
       <div className='app-content__shell'>
-        <main className="app-content">
+        <div className="app-content">
           <Outlet />
-        </main>
+        </div>
       </div>
     </div>
   );

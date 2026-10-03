@@ -5,6 +5,7 @@ import { AppLayout } from './pages/AppLayout/AppLayout';
 import { Dashboard } from './pages/Dashboard/Dashboard';
 import { TimecardsPage } from './pages/TimecardsPage';
 import { TimecardFormPage } from './pages/TimecardFormPage';
+import { ReportsPage } from './pages/ReportsPage/ReportsPage';
 import './App.scss';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/timecards" element={<TimecardsPage />} />
         <Route path="/timecards/new" element={<TimecardFormPage />} />
         <Route path="/timecards/:id/edit" element={<TimecardFormPage />} />
+        <Route path="/reports" element={<ReportsPage />} />
       </Route>
     </Routes>
   );

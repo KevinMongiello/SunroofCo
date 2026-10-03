@@ -1,14 +1,13 @@
 import type { User } from "../../types/user";
 import { Pencil, Trash2 } from "lucide-react";
 import { Table } from "../BasicCrudTable/BasicCrudTable";
+import { toDollars } from "../../util/formatters";
 
 interface UserTableProps {
   users: User[];
   onEdit: (user: User) => void;
   onDelete: (userId: string) => void;
 }
-
-const toDollars = (num: number) => `$${num}`;
 
 export const UserTable = ({ users, onEdit, onDelete }: UserTableProps) => (
   <Table

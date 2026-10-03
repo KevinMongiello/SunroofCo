@@ -50,4 +50,47 @@ export class ReportsService {
       totalHoursThisWeek: totalHoursAgg.totalHoursThisWeek ?? 0,
     };
   }
+
+  async labor(startDate: string, endDate: string) {
+    const users = await this.prisma.db.orm.public.User.all();
+
+    const hoursByUser = await this.prisma.db.orm.public.TimeCard.where((t) =>
+      t.date.gte(startDate),
+    )
+      .where((t) => t.date.lt(endDate))
+      .groupBy('userId')
+      .aggregate((agg) => ({
+        hours: agg.sum('hoursWorked'),
+      }));
+
+    const hoursByUserId = new Map(
+      hoursByUser.map(row => [
+        row.userId,
+        row.hours ?? 0
+      ])
+    );
+    let totalHours = 0;
+    let totalLaborCost = 0;
+    let totalCustomerValue = 0;
+    const reportUsers = users.map(user => {
+      const hours = hoursByUserId.get(user.id) ?? 0;
+      totalHours += hours;
+      totalLaborCost += user.costPerHour * hours;
+      totalCustomerValue += user.priceToCustomerPerHour * hours;
+      return {
+        ...user,
+        hours,
+        laborCost: hours * user.costPerHour,
+        customerValue: hours * user.priceToCustomerPerHour
+      };
+    });
+
+    return {
+      totalHours,
+      totalLaborCost,
+      totalCustomerValue,
+      grossMargin: totalCustomerValue - totalLaborCost,
+      users: reportUsers
+    };
+  }
 }

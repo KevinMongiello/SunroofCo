@@ -1,0 +1,1 @@
+export const toDollars = (num: number) => `$${num}`;

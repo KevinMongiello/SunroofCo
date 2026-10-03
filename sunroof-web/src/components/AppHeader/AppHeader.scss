@@ -2,16 +2,26 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 2rem;
+  padding-bottom: 2em;
 
+  &--lg {
+    font-size: 20px;
+  }
+  &--md {
+    font-size: 15px;
+  }
+  &--sm {
+    font-size: 12px;
+  }
+  
   h1 {
     color: black;
-    margin: 0.25rem 0 1rem;
-    font-size: 40px;
+    margin: 0.125em 0 .375em;
+    font-size: 2em;
   }
 
   h2 {
-    font-size: 20px;
+    font-size: 1.125em;
     color: #676767;
   }
 

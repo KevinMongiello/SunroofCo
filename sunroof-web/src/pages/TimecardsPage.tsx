@@ -30,7 +30,7 @@ export const TimecardsPage = () => {
   ];
 
   return (
-    <>
+    <main>
       <AppHeader
         h1Text="Timecards"
         h2Text="View and manage time entries."
@@ -41,6 +41,6 @@ export const TimecardsPage = () => {
         onDelete={onDelete}
         onEdit={onEdit}
       />
-    </>
+    </main>
   );
 };

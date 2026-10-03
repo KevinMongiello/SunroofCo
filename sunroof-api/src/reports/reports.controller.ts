@@ -10,6 +10,14 @@ export class ReportsController {
     return this.reportsService.dashboard();
   }
 
+  @Get('labor')
+  labor(
+    @Query('startDate') startDate: string,
+    @Query('endDate') endDate: string,
+  ) {
+    return this.reportsService.labor(startDate, endDate);
+  }
+
   @Get('user-hours')
   userHours(
     @Query('startDate') startDate: string,

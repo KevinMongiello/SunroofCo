@@ -1,0 +1,27 @@
+.reports-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.reports-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.reports-charts {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 1rem;
+}
+
+.reports-details {
+  display: grid;
+  grid-template-columns: 2fr 0.75fr;
+  gap: 1rem;
+}
+
+.reports-page-header {
+  padding-bottom: 0;
+}

@@ -31,13 +31,13 @@ export const UsersPage = () => {
   ];
 
   return (
-    <>
+    <main>
       <AppHeader
         h1Text="Users"
         h2Text="Manage team members and their information."
         buttonConfigs={buttonConfigs}
       />
       <UserTable users={users} onEdit={onEdit} onDelete={onDelete} />
-    </>
+    </main>
   );
 };

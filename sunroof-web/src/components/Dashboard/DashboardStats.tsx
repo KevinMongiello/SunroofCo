@@ -13,7 +13,7 @@ export const DashboardStats = ({
   totalHoursThisWeek,
 }: DashboardStatsProps) => {
   return (
-    <div className="dashboard-stats">
+    <div className="stat-cards">
       <StatCard
         value={totalUsers?.toString() ?? '--'}
         label="Total Users"

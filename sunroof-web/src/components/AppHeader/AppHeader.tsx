@@ -6,6 +6,9 @@ interface AppHeaderProps {
   h1Text?: string;
   h2Text?: string;
   navBack?: () => void;
+  children?: React.ReactNode;
+  scale?: 'sm' | 'md' | 'lg';
+  classNames?: string;
 }
 
 export const AppHeader = ({
@@ -13,6 +16,9 @@ export const AppHeader = ({
   h2Text,
   buttonConfigs = [],
   navBack,
+  children,
+  scale = 'lg',
+  classNames
 }: AppHeaderProps) => {
   const navBackNode = !!navBack ? (
     <>
@@ -26,7 +32,7 @@ export const AppHeader = ({
     </>
   ) : null;
   return (
-    <header className="app-header">
+    <header className={`app-header app-header--${scale} ${classNames ?? ''}`}>
       <div className="header-left">
         {navBackNode}
         <div className="header-body">
@@ -34,6 +40,7 @@ export const AppHeader = ({
           {h2Text ? <h2>{h2Text}</h2> : null}
         </div>
       </div>
+      {children}
       {buttonConfigs?.length > 0 ? (
         <div>
           {buttonConfigs.map((config) => (

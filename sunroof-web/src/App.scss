@@ -73,3 +73,24 @@
     background: rgb(0 0 0 / 9%);
   }
 }
+
+.table {
+  text-align: left;
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+  width: 100%;
+  thead {
+    background-color: #eee;
+    th {
+      padding: 0.55rem 1rem;
+    }
+  }
+  td {
+    padding: 0.55rem 1rem;
+    border-bottom: 1px solid #eee;
+  }
+}
+
+.pd-16 {
+  padding: 16px;
+}

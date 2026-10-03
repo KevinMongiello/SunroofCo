@@ -35,9 +35,8 @@ export const Dashboard = () => {
 
   const onAddUser = () => navigate("/users/new?returnTo=/");
   const onAddTimecard = () => navigate("/timecards/new?returnTo=/");
-  console.log({ dashboardStats });
   return (
-    <>
+    <main>
       <AppHeader
         h1Text="Dashboard"
         h2Text="Here's what's happening with your team."
@@ -51,6 +50,6 @@ export const Dashboard = () => {
         <RecentTimecards timecards={timecards} onViewAll={onViewAll} />
         <QuickActions onAddUser={onAddUser} onAddTimecard={onAddTimecard} />
       </div>
-    </>
+    </main>
   );
 };
