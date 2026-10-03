@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { deleteTimecard, fetchAllTimeCards } from "../api/timecards";
 import { useNavigate } from "react-router-dom";
-import { AppHeader } from "../components/AppHeader";
-import { TimecardsTable } from "../components/TimecardsTable";
+import { AppHeader } from "../components/AppHeader/AppHeader";
+import { TimecardsTable } from "../components/Timecards/TimecardsTable";
 import type { TimeCardWithUser } from "../types/timecards";
 
 export const TimecardsPage = () => {

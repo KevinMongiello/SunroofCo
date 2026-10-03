@@ -1,4 +1,4 @@
-import type { TimeCardWithUser } from "../types/timecards";
+import type { TimeCardWithUser } from "../../types/timecards";
 
 interface RecentTimecardsProps {
   onViewAll: (e: React.MouseEvent<HTMLAnchorElement>) => void;

@@ -1,34 +1,6 @@
-.quick-stats {
+.dashboard-stats {
   display: flex;
   justify-content: space-between;
-  .stat-card {
-    border-radius: 15px;
-    padding: 1.5rem;
-    display: flex;
-    .stat-card-value {
-      font-size: 32px;
-      margin-bottom: 8px;
-    }
-    .stat-card-label {
-      font-size: 16px;
-    }
-    .icon {
-      align-self: start;
-      padding: 5px;
-      border-radius: 20%;
-    }
-    &.blue .icon {
-      color: rgb(55, 115, 245);
-      background: rgba(55, 115, 245, 0.05);
-    }
-    &.green .icon {
-      color: rgb(3, 170, 3);
-      background: rgba(3, 170, 3, 0.05);
-    }
-    .stat-card-right {
-      padding-left: 1rem;
-    }
-  }
 }
 
 .dashboard-bottom {
@@ -48,7 +20,6 @@
       }
       a {
         color: rgb(0, 85, 255);
-        cursor: pointer;
       }
     }
     .table {

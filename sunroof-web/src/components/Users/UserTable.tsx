@@ -1,6 +1,6 @@
-import type { User } from "../types/user";
+import type { User } from "../../types/user";
 import { Pencil, Trash2 } from "lucide-react";
-import { Table } from "./BasicCrudTable";
+import { Table } from "../BasicCrudTable/BasicCrudTable";
 
 interface UserTableProps {
   users: User[];

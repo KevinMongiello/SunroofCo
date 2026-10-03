@@ -1,9 +1,9 @@
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
-import { UserForm } from "../components/UserForm";
+import { UserForm } from "../components/Users/UserForm";
 import { createUser, fetchUser, updateUser } from "../api/users";
 import type { User, CreateUser } from "../types/user";
-import { AppHeader } from "../components/AppHeader";
+import { AppHeader } from "../components/AppHeader/AppHeader";
 
 export const UserFormPage = () => {
   const { id } = useParams();

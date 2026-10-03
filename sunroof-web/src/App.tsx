@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import { UsersPage } from './pages/UsersPage';
 import { UserFormPage } from './pages/UserFormPage';
-import { AppLayout } from './pages/AppLayout';
-import { Dashboard } from './pages/Dashboard';
+import { AppLayout } from './pages/AppLayout/AppLayout';
+import { Dashboard } from './pages/Dashboard/Dashboard';
 import { TimecardsPage } from './pages/TimecardsPage';
 import { TimecardFormPage } from './pages/TimecardFormPage';
 import './App.scss';

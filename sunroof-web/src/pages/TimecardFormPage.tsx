@@ -6,9 +6,9 @@ import {
   fetchTimecard,
   updateTimecard,
 } from "../api/timecards";
-import { TimecardForm } from "../components/TimecardForm";
+import { TimecardForm } from "../components/Timecards/TimecardForm";
 import { fetchAllUsers } from "../api/users";
-import { AppHeader } from "../components/AppHeader";
+import { AppHeader } from "../components/AppHeader/AppHeader";
 
 // Use this as default FK, since selecting a user
 // as part of the "new timecard" workflow

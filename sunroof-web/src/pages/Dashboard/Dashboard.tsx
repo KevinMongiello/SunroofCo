@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { AppHeader } from "../components/AppHeader";
-import { QuickActions } from "../components/QuickActions";
-import { QuickStats } from "../components/QuickStats";
-import { RecentTimecards } from "../components/RecentTimecards";
+import { AppHeader } from "../../components/AppHeader/AppHeader";
+import { QuickActions } from "../../components/Dashboard/QuickActions";
+import { DashboardStats } from "../../components/Dashboard/DashboardStats";
+import { RecentTimecards } from "../../components/Dashboard/RecentTimecards";
 import "./Dashboard.scss";
 import { useEffect, useState } from "react";
-import { fetchAllTimeCards } from "../api/timecards";
-import type { TimeCardWithUser } from "../types/timecards";
-import { fetchDashboardStats } from "../api/reports";
+import { fetchAllTimeCards } from "../../api/timecards";
+import type { TimeCardWithUser } from "../../types/timecards";
+import { fetchDashboardStats } from "../../api/reports";
 
 interface DashboardStats {
   totalUsers: number;
@@ -42,7 +42,7 @@ export const Dashboard = () => {
         h1Text="Dashboard"
         h2Text="Here's what's happening with your team."
       />
-      <QuickStats
+      <DashboardStats
         totalUsers={dashboardStats?.totalUsers}
         totalTimecards={dashboardStats?.totalTimeCards}
         totalHoursThisWeek={dashboardStats?.totalHoursThisWeek}

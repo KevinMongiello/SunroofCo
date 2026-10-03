@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import type { User } from "../types/user";
 import { deleteUser, fetchAllUsers } from "../api/users";
-import { UserTable } from "../components/UserTable";
+import { UserTable } from "../components/Users/UserTable";
 import { useNavigate } from "react-router-dom";
-import { AppHeader } from "../components/AppHeader";
+import { AppHeader } from "../components/AppHeader/AppHeader";
 
 export const UsersPage = () => {
   const navigate = useNavigate();

@@ -1,6 +1,6 @@
 import { Pencil, Trash2 } from "lucide-react";
-import { Table } from "./BasicCrudTable";
-import type { TimeCardWithUser } from "../types/timecards";
+import { Table } from "../BasicCrudTable/BasicCrudTable";
+import type { TimeCardWithUser } from "../../types/timecards";
 
 interface TimecardTableProps {
   timecards: TimeCardWithUser[];

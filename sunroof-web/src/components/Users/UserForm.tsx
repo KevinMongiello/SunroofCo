@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import type { CreateUser, User } from "../types/user";
-import { DynamicForm } from "./DynamicForm";
+import type { CreateUser, User } from "../../types/user";
+import { DynamicForm } from "../DynamicForm/DynamicForm";
 
 interface UserFormProps {
   onSubmit: (data: CreateUser) => void;

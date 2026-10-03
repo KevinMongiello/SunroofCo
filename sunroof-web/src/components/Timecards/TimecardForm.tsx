@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import type { CreateTimeCardForm, TimeCard } from "../types/timecards";
-import { DynamicForm } from "./DynamicForm";
+import type { CreateTimeCardForm, TimeCard } from "../../types/timecards";
+import { DynamicForm } from "../DynamicForm/DynamicForm";
 
 interface TimecardProps {
   onSubmit: (data: CreateTimeCardForm) => void;
