@@ -25,17 +25,28 @@ export const Dashboard = () => {
   };
 
   useEffect(() => {
-    fetchAllTimeCards({ includeUser: true, limit: 5, order: { by: 'date', dir: 'desc'} }).then(setTimecards);
-    fetchDashboardStats().then(setDashboardStats)
+    fetchAllTimeCards({
+      includeUser: true,
+      limit: 5,
+      order: { by: "date", dir: "desc" },
+    }).then(setTimecards);
+    fetchDashboardStats().then(setDashboardStats);
   }, []);
 
   const onAddUser = () => navigate("/users/new?returnTo=/");
   const onAddTimecard = () => navigate("/timecards/new?returnTo=/");
-  console.log({dashboardStats})
+  console.log({ dashboardStats });
   return (
     <>
-      <AppHeader h1Text="Dashboard" h2Text="Here's what's happening with your team." />
-      <QuickStats totalUsers={dashboardStats?.totalUsers} totalTimecards={dashboardStats?.totalTimeCards} totalHoursThisWeek={dashboardStats?.totalHoursThisWeek} />
+      <AppHeader
+        h1Text="Dashboard"
+        h2Text="Here's what's happening with your team."
+      />
+      <QuickStats
+        totalUsers={dashboardStats?.totalUsers}
+        totalTimecards={dashboardStats?.totalTimeCards}
+        totalHoursThisWeek={dashboardStats?.totalHoursThisWeek}
+      />
       <div className="dashboard-bottom">
         <RecentTimecards timecards={timecards} onViewAll={onViewAll} />
         <QuickActions onAddUser={onAddUser} onAddTimecard={onAddTimecard} />
