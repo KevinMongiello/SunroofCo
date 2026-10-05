@@ -1,22 +1,101 @@
 // use prisma-next
 model User {
-  id        String                     @id @default(uuid())
-  email     String                     @unique
-  name      String
-  costPerHour Float @default(25)
-  priceToCustomerPerHour Float @default(50)
-  timecards TimeCard[]
-  createdAt TimestamptzString          @default(now())
-  updatedAt temporal.updatedAtString()
+  id                     String                     @id @default(uuid())
+  email                  String                     @unique
+  name                   String
+  costPerHour            Float                      @default(25)
+  priceToCustomerPerHour Float                      @default(50)
+  timecards              TimeCard[]
+  projects               UserProject[]
+  tickets                UserTicket[]
+  createdAt              TimestamptzString          @default(now())
+  updatedAt              temporal.updatedAtString()
+}
+
+model Project {
+  id          String                     @id @default(uuid())
+  name        String
+  description String?
+  status      ProjectStatus              @default(PLANNED)
+  startDate   DateString?
+  endDate     DateString?
+  users       UserProject[]
+  tickets     Ticket[]
+  createdAt   TimestamptzString          @default(now())
+  updatedAt   temporal.updatedAtString()
+}
+
+model Ticket {
+  id             String                     @id @default(uuid())
+  projectId      String
+  title          String
+  description    String?
+  status         TicketStatus               @default(BACKLOG)
+  priority       TicketPriority             @default(MEDIUM)
+  scheduledStart DateString?
+  scheduledEnd   DateString?
+  completedAt    DateString?
+  estimatedHours Float?
+  project        Project                    @relation(fields: [projectId], references: [id])
+  users          UserTicket[]
+  timecards      TimeCard[]
+  createdAt      TimestamptzString          @default(now())
+  updatedAt      temporal.updatedAtString()
 }
 
 model TimeCard {
   id          String                     @id @default(uuid())
   userId      String
+  ticketId    String?
   date        DateString
   hoursWorked Float
   createdAt   TimestamptzString          @default(now())
   updatedAt   temporal.updatedAtString()
 
-  user        User                       @relation(fields:[userId], references:[id])
+  user   User    @relation(fields: [userId], references: [id])
+  ticket Ticket? @relation(fields: [ticketId], references: [id])
+}
+
+model UserProject {
+  userId    String
+  projectId String
+
+  user    User    @relation(fields: [userId], references: [id])
+  project Project @relation(fields: [projectId], references: [id])
+
+  @@id([userId, projectId])
+}
+
+model UserTicket {
+  userId   String
+  ticketId String
+
+  user   User   @relation(fields: [userId], references: [id])
+  ticket Ticket @relation(fields: [ticketId], references: [id])
+
+  @@id([userId, ticketId])
+}
+
+enum ProjectStatus {
+  PLANNED
+  ACTIVE
+  ON_HOLD
+  COMPLETED
+  ARCHIVED
+}
+
+enum TicketStatus {
+  BACKLOG
+  SCHEDULED
+  IN_PROGRESS
+  BLOCKED
+  COMPLETED
+  ARCHIVED
+}
+
+enum TicketPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
 }

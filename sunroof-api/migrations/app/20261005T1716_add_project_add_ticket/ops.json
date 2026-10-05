@@ -1,0 +1,686 @@
+[
+  {
+    "id": "table.Project",
+    "label": "Create table \"Project\"",
+    "summary": "Creates table \"Project\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "Project"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Project\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Project\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"Project\"",
+        "sql": "CREATE TABLE \"public\".\"Project\" (\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"description\" text,\n  \"endDate\" date,\n  \"id\" text NOT NULL,\n  \"name\" text NOT NULL,\n  \"startDate\" date,\n  \"status\" text DEFAULT 'PLANNED' NOT NULL,\n  \"updatedAt\" timestamptz NOT NULL,\n  PRIMARY KEY (\"id\"),\n  CONSTRAINT \"Project_status_check_1f998618\" CHECK (\"status\" IN ('PLANNED', 'ACTIVE', 'ON_HOLD', 'COMPLETED', 'ARCHIVED'))\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Project\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Project\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "table.Ticket",
+    "label": "Create table \"Ticket\"",
+    "summary": "Creates table \"Ticket\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "Ticket"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Ticket\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Ticket\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"Ticket\"",
+        "sql": "CREATE TABLE \"public\".\"Ticket\" (\n  \"completedAt\" date,\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"description\" text,\n  \"estimatedHours\" float8,\n  \"id\" text NOT NULL,\n  \"priority\" text DEFAULT 'MEDIUM' NOT NULL,\n  \"projectId\" text NOT NULL,\n  \"scheduledEnd\" date,\n  \"scheduledStart\" date,\n  \"status\" text DEFAULT 'BACKLOG' NOT NULL,\n  \"title\" text NOT NULL,\n  \"updatedAt\" timestamptz NOT NULL,\n  PRIMARY KEY (\"id\"),\n  CONSTRAINT \"Ticket_priority_check_8918b779\" CHECK (\"priority\" IN ('LOW', 'MEDIUM', 'HIGH', 'URGENT')),\n  CONSTRAINT \"Ticket_status_check_6322b789\" CHECK (\"status\" IN ('BACKLOG', 'SCHEDULED', 'IN_PROGRESS', 'BLOCKED', 'COMPLETED', 'ARCHIVED'))\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Ticket\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Ticket\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "table.UserProject",
+    "label": "Create table \"UserProject\"",
+    "summary": "Creates table \"UserProject\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "UserProject"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"UserProject\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"UserProject\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"UserProject\"",
+        "sql": "CREATE TABLE \"public\".\"UserProject\" (\n  \"projectId\" text NOT NULL,\n  \"userId\" text NOT NULL,\n  PRIMARY KEY (\"userId\", \"projectId\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"UserProject\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"UserProject\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "table.UserTicket",
+    "label": "Create table \"UserTicket\"",
+    "summary": "Creates table \"UserTicket\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "UserTicket"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"UserTicket\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"UserTicket\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"UserTicket\"",
+        "sql": "CREATE TABLE \"public\".\"UserTicket\" (\n  \"ticketId\" text NOT NULL,\n  \"userId\" text NOT NULL,\n  PRIMARY KEY (\"userId\", \"ticketId\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"UserTicket\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"UserTicket\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.TimeCard.ticketId",
+    "label": "Add column \"ticketId\" to \"TimeCard\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "ticketId",
+        "table": "TimeCard"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"ticketId\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "TimeCard",
+          "ticketId"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"ticketId\"",
+        "sql": "ALTER TABLE \"public\".\"TimeCard\" ADD COLUMN \"ticketId\" text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"ticketId\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "TimeCard",
+          "ticketId"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.Ticket.Ticket_projectId_idx_a96e4d92",
+    "label": "Create index \"Ticket_projectId_idx_a96e4d92\" on \"Ticket\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "Ticket_projectId_idx_a96e4d92",
+        "table": "Ticket"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Ticket_projectId_idx_a96e4d92\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Ticket_projectId_idx_a96e4d92\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Ticket_projectId_idx_a96e4d92\"",
+        "sql": "CREATE INDEX \"Ticket_projectId_idx_a96e4d92\" ON \"public\".\"Ticket\" (\"projectId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Ticket_projectId_idx_a96e4d92\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Ticket_projectId_idx_a96e4d92\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.TimeCard.TimeCard_ticketId_idx_2fe526c3",
+    "label": "Create index \"TimeCard_ticketId_idx_2fe526c3\" on \"TimeCard\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "TimeCard_ticketId_idx_2fe526c3",
+        "table": "TimeCard"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"TimeCard_ticketId_idx_2fe526c3\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"TimeCard_ticketId_idx_2fe526c3\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"TimeCard_ticketId_idx_2fe526c3\"",
+        "sql": "CREATE INDEX \"TimeCard_ticketId_idx_2fe526c3\" ON \"public\".\"TimeCard\" (\"ticketId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"TimeCard_ticketId_idx_2fe526c3\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"TimeCard_ticketId_idx_2fe526c3\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.UserProject.UserProject_projectId_idx_a96e4d92",
+    "label": "Create index \"UserProject_projectId_idx_a96e4d92\" on \"UserProject\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "UserProject_projectId_idx_a96e4d92",
+        "table": "UserProject"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"UserProject_projectId_idx_a96e4d92\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"UserProject_projectId_idx_a96e4d92\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"UserProject_projectId_idx_a96e4d92\"",
+        "sql": "CREATE INDEX \"UserProject_projectId_idx_a96e4d92\" ON \"public\".\"UserProject\" (\"projectId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"UserProject_projectId_idx_a96e4d92\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"UserProject_projectId_idx_a96e4d92\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.UserProject.UserProject_userId_idx_a489d58a",
+    "label": "Create index \"UserProject_userId_idx_a489d58a\" on \"UserProject\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "UserProject_userId_idx_a489d58a",
+        "table": "UserProject"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"UserProject_userId_idx_a489d58a\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"UserProject_userId_idx_a489d58a\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"UserProject_userId_idx_a489d58a\"",
+        "sql": "CREATE INDEX \"UserProject_userId_idx_a489d58a\" ON \"public\".\"UserProject\" (\"userId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"UserProject_userId_idx_a489d58a\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"UserProject_userId_idx_a489d58a\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.UserTicket.UserTicket_ticketId_idx_2fe526c3",
+    "label": "Create index \"UserTicket_ticketId_idx_2fe526c3\" on \"UserTicket\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "UserTicket_ticketId_idx_2fe526c3",
+        "table": "UserTicket"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"UserTicket_ticketId_idx_2fe526c3\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"UserTicket_ticketId_idx_2fe526c3\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"UserTicket_ticketId_idx_2fe526c3\"",
+        "sql": "CREATE INDEX \"UserTicket_ticketId_idx_2fe526c3\" ON \"public\".\"UserTicket\" (\"ticketId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"UserTicket_ticketId_idx_2fe526c3\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"UserTicket_ticketId_idx_2fe526c3\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.UserTicket.UserTicket_userId_idx_a489d58a",
+    "label": "Create index \"UserTicket_userId_idx_a489d58a\" on \"UserTicket\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "UserTicket_userId_idx_a489d58a",
+        "table": "UserTicket"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"UserTicket_userId_idx_a489d58a\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"UserTicket_userId_idx_a489d58a\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"UserTicket_userId_idx_a489d58a\"",
+        "sql": "CREATE INDEX \"UserTicket_userId_idx_a489d58a\" ON \"public\".\"UserTicket\" (\"userId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"UserTicket_userId_idx_a489d58a\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"UserTicket_userId_idx_a489d58a\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.Ticket.Ticket_projectId_fkey",
+    "label": "Add foreign key \"Ticket_projectId_fkey\" on \"Ticket\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "Ticket_projectId_fkey",
+        "table": "Ticket"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"Ticket_projectId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "Ticket_projectId_fkey",
+          "public",
+          "\"public\".\"Ticket\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"Ticket_projectId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"Ticket\"\nADD CONSTRAINT \"Ticket_projectId_fkey\"\nFOREIGN KEY (\"projectId\")\nREFERENCES \"public\".\"Project\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"Ticket_projectId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "Ticket_projectId_fkey",
+          "public",
+          "\"public\".\"Ticket\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.TimeCard.TimeCard_ticketId_fkey",
+    "label": "Add foreign key \"TimeCard_ticketId_fkey\" on \"TimeCard\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "TimeCard_ticketId_fkey",
+        "table": "TimeCard"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"TimeCard_ticketId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "TimeCard_ticketId_fkey",
+          "public",
+          "\"public\".\"TimeCard\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"TimeCard_ticketId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"TimeCard\"\nADD CONSTRAINT \"TimeCard_ticketId_fkey\"\nFOREIGN KEY (\"ticketId\")\nREFERENCES \"public\".\"Ticket\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"TimeCard_ticketId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "TimeCard_ticketId_fkey",
+          "public",
+          "\"public\".\"TimeCard\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.UserProject.UserProject_userId_fkey",
+    "label": "Add foreign key \"UserProject_userId_fkey\" on \"UserProject\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "UserProject_userId_fkey",
+        "table": "UserProject"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"UserProject_userId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "UserProject_userId_fkey",
+          "public",
+          "\"public\".\"UserProject\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"UserProject_userId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"UserProject\"\nADD CONSTRAINT \"UserProject_userId_fkey\"\nFOREIGN KEY (\"userId\")\nREFERENCES \"public\".\"User\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"UserProject_userId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "UserProject_userId_fkey",
+          "public",
+          "\"public\".\"UserProject\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.UserProject.UserProject_projectId_fkey",
+    "label": "Add foreign key \"UserProject_projectId_fkey\" on \"UserProject\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "UserProject_projectId_fkey",
+        "table": "UserProject"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"UserProject_projectId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "UserProject_projectId_fkey",
+          "public",
+          "\"public\".\"UserProject\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"UserProject_projectId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"UserProject\"\nADD CONSTRAINT \"UserProject_projectId_fkey\"\nFOREIGN KEY (\"projectId\")\nREFERENCES \"public\".\"Project\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"UserProject_projectId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "UserProject_projectId_fkey",
+          "public",
+          "\"public\".\"UserProject\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.UserTicket.UserTicket_userId_fkey",
+    "label": "Add foreign key \"UserTicket_userId_fkey\" on \"UserTicket\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "UserTicket_userId_fkey",
+        "table": "UserTicket"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"UserTicket_userId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "UserTicket_userId_fkey",
+          "public",
+          "\"public\".\"UserTicket\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"UserTicket_userId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"UserTicket\"\nADD CONSTRAINT \"UserTicket_userId_fkey\"\nFOREIGN KEY (\"userId\")\nREFERENCES \"public\".\"User\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"UserTicket_userId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "UserTicket_userId_fkey",
+          "public",
+          "\"public\".\"UserTicket\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.UserTicket.UserTicket_ticketId_fkey",
+    "label": "Add foreign key \"UserTicket_ticketId_fkey\" on \"UserTicket\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "UserTicket_ticketId_fkey",
+        "table": "UserTicket"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"UserTicket_ticketId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "UserTicket_ticketId_fkey",
+          "public",
+          "\"public\".\"UserTicket\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"UserTicket_ticketId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"UserTicket\"\nADD CONSTRAINT \"UserTicket_ticketId_fkey\"\nFOREIGN KEY (\"ticketId\")\nREFERENCES \"public\".\"Ticket\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"UserTicket_ticketId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "UserTicket_ticketId_fkey",
+          "public",
+          "\"public\".\"UserTicket\""
+        ]
+      }
+    ]
+  }
+]
