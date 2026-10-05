@@ -8,4 +8,7 @@ import { PrismaModule } from '../prisma/prisma.module.js';
   providers: [ReportsService],
   controllers: [ReportsController],
 })
-export class ReportsModule {}
+export class ReportsModule {
+  constructor(private readonly reportsService: ReportsService) {}
+
+}
