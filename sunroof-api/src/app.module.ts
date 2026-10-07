@@ -8,6 +8,8 @@ import { TimecardsModule } from './timecards/timecards.module.js';
 import { ReportsModule } from './reports/reports.module.js';
 import { ProjectsModule } from './projects/projects.module.js';
 import { TicketsModule } from './tickets/tickets.module.js';
+import { McpModule } from './mcp/mcp.module.js';
+import { AiModule } from './ai/ai.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -26,6 +28,8 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     ReportsModule,
     ProjectsModule,
     TicketsModule,
+    McpModule,
+    AiModule,
   ],
   controllers: [AppController],
   providers: [AppService],
