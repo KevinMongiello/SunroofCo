@@ -1,5 +1,4 @@
 import type { User } from "../../types/user.ts";
-import { useNavigate } from "react-router-dom";
 import { AppHeader } from "../../components/AppHeader/AppHeader.tsx";
 import { fetchLaborReport } from "../../api/reports.ts";
 import { ReportCards } from "../../components/Reports/ReportCards.tsx";
@@ -10,6 +9,7 @@ import { DateRangePicker } from "../../components/DateRangePicker/DateRangePicke
 import { HoursByUserChart } from "../../components/Reports/HoursByUserChart.tsx";
 import { ValueVsLabor } from "../../components/Reports/ValueVsLabor.tsx";
 import "./ReportsPage.scss";
+import { ChatBoxContainer } from "../../components/ChatBox/ChatBoxContainer.tsx";
 type UserWithLaborAgg = User & {
   hours: number;
   laborCost: number;
@@ -25,7 +25,6 @@ interface LaborReport {
 }
 
 export const ReportsPage = () => {
-  const navigate = useNavigate();
   const [laborReport, setLaborReport] = useState<LaborReport | null>(null);
   const [dateRange, setDateRange] = useState<DateRange>(getDateRange(7)); // default to 1 week
 
@@ -86,6 +85,7 @@ export const ReportsPage = () => {
           <ValueVsLabor data={valuelVsLabor} />
         </div>
       </section>
+      <ChatBoxContainer />
     </main>
   );
 };

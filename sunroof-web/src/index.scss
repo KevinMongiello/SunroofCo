@@ -98,3 +98,13 @@ p {
 a {
   cursor: pointer;
 }
+
+::selection {
+  background-color: #bfdbfe;
+  color: #1e3a8a;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
