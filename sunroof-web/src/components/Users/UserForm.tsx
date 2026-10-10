@@ -41,7 +41,7 @@ export const UserForm = ({
     label: "Name",
     inputType: "text",
     onChange: setName,
-    placeholder: "Jimbob McCrown",
+    placeholder: "Adam Brady",
     value: name,
   };
   const emailFieldConfig = {

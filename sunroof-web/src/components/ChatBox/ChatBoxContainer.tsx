@@ -8,7 +8,7 @@ const defaultMsg = {
   id: "123",
   role: ChatBoxMessageRoles.NOTIFICATION,
   content:
-    'Hi there, what can I help you with? You can say something like "Which projects are we working on next week?" or "Which recent project has had the highest margins?"',
+    'Hi there, what can I help you with? You can say something like "Which projects are currently active?" or "Summarize the next 3 upcoming scheduled tickets"',
 };
 
 export const ChatBoxContainer = () => {
