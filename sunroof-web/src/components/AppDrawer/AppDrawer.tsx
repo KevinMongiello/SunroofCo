@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import "./AppDrawer.scss";
+import "./AppDrawer.css";
 import { ChartNoAxesColumn, House, SquareUserRound, Users } from "lucide-react";
 
 export const AppDrawer = () => {

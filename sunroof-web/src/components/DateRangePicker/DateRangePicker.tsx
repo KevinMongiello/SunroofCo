@@ -4,7 +4,7 @@ import { CalendarDays, ChevronDown } from "lucide-react";
 import { formatDate } from "../../util/date";
 import type { DateRange as DateRange2 } from "../../types/date";
 import '@daypicker/react/style.css';
-import './DateRangePicker.scss'
+import './DateRangePicker.css'
 
 type DateRangePickerProps = {
   dateRange: DateRange2;

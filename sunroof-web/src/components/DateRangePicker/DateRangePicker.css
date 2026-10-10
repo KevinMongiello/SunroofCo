@@ -1,0 +1,122 @@
+.date-range-picker {
+  position: relative;
+  display: inline-block;
+
+}
+
+.date-range-picker__trigger {
+  height: 44px;
+  padding: 0 16px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  background: white;
+  color: #1f2937;
+
+  border: 1px solid #dfe5ee;
+  border-radius: 8px;
+
+  font-size: 0.95rem;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.date-range-picker__popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 1000;
+
+  width: max-content;
+  padding: 1.25rem;
+
+  background: white;
+  color: #1f2937;
+
+  border: 1px solid #e2e7ef;
+  border-radius: 12px;
+
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.14);
+
+  table {
+    width: auto;
+    text-align: center;
+
+    border: none;
+    border-collapse: separate;
+  }
+
+  thead {
+    background-color: transparent;
+  }
+
+  th,
+  td {
+    padding: 0;
+    border: none;
+  }
+}
+
+.date-range-picker__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+
+  margin-top: 1rem;
+  padding-top: 1rem;
+
+  border-top: 1px solid #eee;
+
+  button {
+    padding: 0.55rem 1rem;
+
+    border-radius: 0.5rem;
+
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    cursor: pointer;
+  }
+
+  button:first-child {
+    background: white;
+    color: #1f2937;
+
+    border: 1px solid #ddd;
+  }
+
+  button:last-child {
+    background: #3478f6;
+    color: white;
+
+    border: 1px solid #3478f6;
+    &:disabled {
+      background: #b8c7df;
+      border-color: #b8c7df;
+      color: #f8fafc;
+      cursor: not-allowed;
+      opacity: 0.9;
+    }
+  }
+}
+
+.report-date-picker {
+  .rdp-month_grid {
+    width: auto;
+  }
+
+  .rdp-day {
+    padding: 0;
+  }
+
+  .rdp-day_button {
+    width: var(--rdp-day_button-width);
+  }
+}

@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { AppDrawer } from "../../components/AppDrawer/AppDrawer";
-import "./AppLayout.scss";
+import "./AppLayout.css";
 
 export const AppLayout = () => {
   return (

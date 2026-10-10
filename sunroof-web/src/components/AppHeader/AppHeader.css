@@ -1,0 +1,33 @@
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 2em;
+
+}
+
+.app-header--lg {
+  font-size: 20px;
+}
+.app-header--md {
+  font-size: 15px;
+}
+.app-header--sm {
+  font-size: 12px;
+}
+
+.app-header h1 {
+  color: black;
+  margin: 0.125em 0 .375em;
+  font-size: 2em;
+}
+
+.app-header h2 {
+  font-size: 1.125em;
+  color: #676767;
+}
+
+.app-header .header-left {
+  display: flex;
+  gap: 20px;
+}

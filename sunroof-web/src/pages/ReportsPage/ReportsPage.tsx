@@ -7,7 +7,7 @@ import type { DateRange } from "../../types/date.ts";
 import { DateRangePicker } from "../../components/DateRangePicker/DateRangePicker.tsx";
 import { HoursByUserChart } from "../../components/Reports/HoursByUserChart.tsx";
 import { ValueVsLabor } from "../../components/Reports/ValueVsLabor.tsx";
-import "./ReportsPage.scss";
+import "./ReportsPage.css";
 import { ChatBoxContainer } from "../../components/ChatBox/ChatBoxContainer.tsx";
 import type { LaborReport } from "../../types/reports.ts";
 

@@ -3,7 +3,7 @@ import { AppHeader } from "../../components/AppHeader/AppHeader";
 import { QuickActions } from "../../components/Dashboard/QuickActions";
 import { DashboardStats } from "../../components/Dashboard/DashboardStats";
 import { RecentTimecards } from "../../components/Dashboard/RecentTimecards";
-import "./Dashboard.scss";
+import "./Dashboard.css";
 import { useEffect, useState } from "react";
 import { fetchAllTimeCards } from "../../api/timecards";
 import type { TimeCardWithUser } from "../../types/timecards";

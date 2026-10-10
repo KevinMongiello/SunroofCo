@@ -1,4 +1,4 @@
-import "./Form.scss";
+import "./Form.css";
 
 interface FieldConfig<T> {
   id: string;

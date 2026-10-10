@@ -66,11 +66,12 @@
         outline-offset: 2px;
       }
 
-      &--active {
-        background: #31445a;
-        color: white;
-        font-weight: 600;
-      }
+    }
+
+    .app-header-button--active {
+      background: #31445a;
+      color: white;
+      font-weight: 600;
     }
   }
 }

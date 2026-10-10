@@ -24,10 +24,11 @@
     cursor: not-allowed;
   }
 
-  &--icon {
-    padding: 6px;
-    line-height: 0;
-  }
+}
+
+.button--icon {
+  padding: 6px;
+  line-height: 0;
 }
 
 .button--primary {

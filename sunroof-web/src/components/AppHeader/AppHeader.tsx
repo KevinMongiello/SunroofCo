@@ -1,5 +1,5 @@
 import { ArrowLeft } from "lucide-react";
-import "./AppHeader.scss";
+import "./AppHeader.css";
 
 interface AppHeaderProps {
   buttonConfigs?: { label: string; onClick: () => void }[];

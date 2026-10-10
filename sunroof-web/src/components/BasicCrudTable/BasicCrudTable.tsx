@@ -1,6 +1,6 @@
 import cn from "classnames";
 import type { ReactNode } from "react";
-import './BasicCrudTable.scss'
+import './BasicCrudTable.css'
 
 interface Column<T> {
   header: string;

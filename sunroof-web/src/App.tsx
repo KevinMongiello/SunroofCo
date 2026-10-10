@@ -6,7 +6,7 @@ import { Dashboard } from './pages/Dashboard/Dashboard';
 import { TimecardsPage } from './pages/TimecardsPage';
 import { TimecardFormPage } from './pages/TimecardFormPage';
 import { ReportsPage } from './pages/ReportsPage/ReportsPage';
-import './App.scss';
+import './App.css';
 
 function App() {
   return (
