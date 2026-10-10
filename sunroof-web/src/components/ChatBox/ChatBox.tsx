@@ -1,8 +1,8 @@
+import type { ChatBoxMessage } from "../../types/chat";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import "./ChatBox.css";
 import { Bot, MessageCircle, Send, X } from "lucide-react";
-import type { ChatBoxMessage } from "./types";
 
 interface ChatBoxProps {
   messages: ChatBoxMessage[];

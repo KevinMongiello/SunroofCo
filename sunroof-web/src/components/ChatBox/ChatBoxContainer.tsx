@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ChatBox } from "./ChatBox";
-import { ChatBoxMessageRoles } from "./types";
-import type { ChatBoxMessage } from "./types";
+import { ChatBoxMessageRoles } from "../../types/chat";
+import type { ChatBoxMessage } from "../../types/chat";
 import { sendChat } from "../../api/ai";
 
 const defaultMsg = {

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import type { CreateUser, User } from "../../types/user";
+import { useEffect, useState } from "react";
 import { DynamicForm } from "../DynamicForm/DynamicForm";
 
 interface UserFormProps {

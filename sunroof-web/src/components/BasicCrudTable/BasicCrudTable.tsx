@@ -1,12 +1,6 @@
+import type { Column } from "../../types/table";
 import cn from "classnames";
-import type { ReactNode } from "react";
 import './BasicCrudTable.css'
-
-interface Column<T> {
-  header: string;
-  render: (row: T) => ReactNode;
-  className?: string;
-}
 
 interface TableProps<T> {
   rows: T[];

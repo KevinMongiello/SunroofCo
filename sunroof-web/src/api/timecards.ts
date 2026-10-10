@@ -4,16 +4,8 @@ import type {
   TimeCard,
   TimeCardWithUser,
   UpdateTimecard,
+  FetchTimecardsOptions,
 } from "../types/timecards";
-
-interface FetchTimecardsOptions {
-  includeUser?: boolean;
-  limit?: number;
-  order?: {
-    by: keyof UpdateTimecard;
-    dir?: "asc" | "desc";
-  };
-}
 
 export function fetchAllTimeCards(
   options: FetchTimecardsOptions & { includeUser: true },

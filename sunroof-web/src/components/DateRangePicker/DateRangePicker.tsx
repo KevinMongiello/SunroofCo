@@ -1,14 +1,14 @@
+import type { DateRange as ApiDateRange } from "../../types/date";
 import { useState } from "react";
 import { DayPicker, type DateRange } from '@daypicker/react';
 import { CalendarDays, ChevronDown } from "lucide-react";
 import { formatDate } from "../../util/date";
-import type { DateRange as DateRange2 } from "../../types/date";
 import '@daypicker/react/style.css';
 import './DateRangePicker.css'
 
 type DateRangePickerProps = {
-  dateRange: DateRange2;
-  onChange: (dateRange: DateRange2) => void;
+  dateRange: ApiDateRange;
+  onChange: (dateRange: ApiDateRange) => void;
 };
 
 function parseDate(date: string) {

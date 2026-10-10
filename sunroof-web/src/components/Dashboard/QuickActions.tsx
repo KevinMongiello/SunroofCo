@@ -1,3 +1,4 @@
+
 interface QuickActionsProps {
   onAddUser: () => void;
   onAddTimecard: () => void;

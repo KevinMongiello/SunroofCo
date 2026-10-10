@@ -1,21 +1,13 @@
+import type { MouseEvent, SubmitEvent } from "react";
+import type { FieldConfig } from "../../types/form";
 import "./Form.css";
-
-interface FieldConfig<T> {
-  id: string;
-  label: string;
-  inputType: string;
-  validation?: any;
-  placeholder?: string;
-  value: T;
-  onChange: (val: string) => void;
-}
 
 interface DynamicFormConfig<T> {
   fieldConfigs: FieldConfig<T>[];
   submitLabel: string;
   cancelLabel: string;
-  onSubmit: (e: React.SubmitEvent) => void;
-  onCancel: (e: React.MouseEvent) => void;
+  onSubmit: (e: SubmitEvent) => void;
+  onCancel: (e: MouseEvent) => void;
 }
 
 export function DynamicForm({

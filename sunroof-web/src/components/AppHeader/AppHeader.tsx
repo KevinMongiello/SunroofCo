@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { ArrowLeft } from "lucide-react";
 import "./AppHeader.css";
 
@@ -6,7 +7,7 @@ interface AppHeaderProps {
   h1Text?: string;
   h2Text?: string;
   navBack?: () => void;
-  children?: React.ReactNode;
+  children?: ReactNode;
   scale?: 'sm' | 'md' | 'lg';
   classNames?: string;
 }

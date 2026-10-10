@@ -1,5 +1,5 @@
-import cn from "classnames";
 import type { LucideIcon } from "lucide-react";
+import cn from "classnames";
 import './StatCard.css'
 
 interface StatCardProps {
