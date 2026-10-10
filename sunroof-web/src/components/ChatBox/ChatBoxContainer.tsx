@@ -53,8 +53,8 @@ export const ChatBoxContainer = () => {
     } catch (err) {
       console.error(err);
       addMessage({
-        role: ChatBoxMessageRoles.NOTIFICATION,
-        content: 'Something went wrong, please try again'
+        role: ChatBoxMessageRoles.ERROR,
+        content: 'AI Assistant unavailable, please try again later.'
       })
     } finally {
       setIsLoading(false);
