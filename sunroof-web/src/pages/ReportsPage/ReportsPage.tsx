@@ -1,4 +1,3 @@
-import type { User } from "../../types/user.ts";
 import { AppHeader } from "../../components/AppHeader/AppHeader.tsx";
 import { fetchLaborReport } from "../../api/reports.ts";
 import { ReportCards } from "../../components/Reports/ReportCards.tsx";
@@ -10,19 +9,7 @@ import { HoursByUserChart } from "../../components/Reports/HoursByUserChart.tsx"
 import { ValueVsLabor } from "../../components/Reports/ValueVsLabor.tsx";
 import "./ReportsPage.scss";
 import { ChatBoxContainer } from "../../components/ChatBox/ChatBoxContainer.tsx";
-type UserWithLaborAgg = User & {
-  hours: number;
-  laborCost: number;
-  customerValue: number;
-};
-
-interface LaborReport {
-  totalHours: number;
-  totalLaborCost: number;
-  totalCustomerValue: number;
-  grossMargin: number;
-  users: UserWithLaborAgg[];
-}
+import type { LaborReport } from "../../types/reports.ts";
 
 export const ReportsPage = () => {
   const [laborReport, setLaborReport] = useState<LaborReport | null>(null);

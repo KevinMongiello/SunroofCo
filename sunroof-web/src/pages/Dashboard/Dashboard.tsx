@@ -8,16 +8,12 @@ import { useEffect, useState } from "react";
 import { fetchAllTimeCards } from "../../api/timecards";
 import type { TimeCardWithUser } from "../../types/timecards";
 import { fetchDashboardStats } from "../../api/reports";
+import type { DashboardStatsResponse } from "../../types/reports";
 
-interface DashboardStats {
-  totalUsers: number;
-  totalTimeCards: number;
-  totalHoursThisWeek: number;
-}
 
 export const Dashboard = () => {
   const [timecards, setTimecards] = useState<TimeCardWithUser[]>([]);
-  const [dashboardStats, setDashboardStats] = useState<DashboardStats>();
+  const [dashboardStats, setDashboardStats] = useState<DashboardStatsResponse>();
   const navigate = useNavigate();
   const onViewAll = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
