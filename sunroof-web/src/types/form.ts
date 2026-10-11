@@ -2,7 +2,8 @@ export interface FieldConfig<T> {
   id: string;
   label: string;
   inputType: string;
-  validation?: any;
+  error?: string;
+  step?: number | "any";
   placeholder?: string;
   value: T;
   onChange: (val: string) => void;

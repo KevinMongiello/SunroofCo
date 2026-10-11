@@ -1,9 +1,11 @@
+import { z } from "zod";
+import { timecardFormSchema } from "../../schemas/timecard";
 import type { CreateTimeCardForm, TimeCard } from "../../types/timecards";
 import { useEffect, useState } from "react";
 import { DynamicForm } from "../DynamicForm/DynamicForm";
 
 interface TimecardProps {
-  onSubmit: (data: CreateTimeCardForm) => void;
+  onSubmit: (data: CreateTimeCardForm) => void | Promise<void>;
   initialValues: TimeCard | null;
   submitLabel: string;
   onCancel: () => void;
@@ -15,46 +17,68 @@ export const TimecardForm = ({
   submitLabel,
   onCancel,
 }: TimecardProps) => {
+  const [errors, setErrors] = useState<Partial<Record<keyof CreateTimeCardForm, string[]>>>({});
+  const [submitError, setSubmitError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [date, setDate] = useState(initialValues?.date ?? "");
   const [hoursWorked, setHoursWorked] = useState(
-    initialValues?.hoursWorked ?? 0,
+    String(initialValues?.hoursWorked ?? 0),
   );
 
   useEffect(() => {
+    setErrors({});
+    setSubmitError("");
     setDate(initialValues?.date ?? "");
-    setHoursWorked(initialValues?.hoursWorked ?? 0);
+    setHoursWorked(String(initialValues?.hoursWorked ?? 0));
   }, [initialValues]);
 
-  function handleSubmit(event: React.SubmitEvent) {
+  async function handleSubmit(event: React.SubmitEvent) {
     event.preventDefault();
+    if (isSubmitting) return;
 
-    onSubmit({ date, hoursWorked });
+    const result = timecardFormSchema.safeParse({ date, hoursWorked });
 
-    setDate("");
-    setHoursWorked(0);
+    setSubmitError("");
+    if (!result.success) {
+      setErrors(z.flattenError(result.error).fieldErrors);
+      return;
+    }
+
+    setErrors({});
+    setIsSubmitting(true);
+    try {
+      await onSubmit(result.data);
+    } catch {
+      setSubmitError("Unable to save the timecard. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   const dateFieldConfig = {
     id: "date",
     label: "Date",
-    inputType: "text",
+    inputType: "date",
     onChange: setDate,
-    placeholder: "1970-01-01",
     value: date,
+    error: errors.date?.[0],
   };
   const hoursWorkedFieldConfig = {
     id: "hours",
     label: "Hours Worked",
-    inputType: "text",
-    onChange: (data: string) => {
-      setHoursWorked(Number(data));
-    },
+    inputType: "number",
+    step: "any" as const,
+    onChange: setHoursWorked,
     value: hoursWorked,
+    error: errors.hoursWorked?.[0],
   };
 
   return (
     <DynamicForm
       fieldConfigs={[dateFieldConfig, hoursWorkedFieldConfig]}
+      noValidate
+      isSubmitting={isSubmitting}
+      submitError={submitError}
       onSubmit={handleSubmit}
       onCancel={onCancel}
       submitLabel={submitLabel}

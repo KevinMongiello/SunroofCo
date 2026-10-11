@@ -65,3 +65,12 @@
     flex: 1;
   }
 }
+
+.form-error {
+  color: #b42318;
+  font-size: 0.875rem;
+}
+
+.form-field input[aria-invalid="true"] {
+  border-color: #b42318;
+}

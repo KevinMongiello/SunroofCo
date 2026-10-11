@@ -6,6 +6,9 @@ interface DynamicFormConfig<T> {
   fieldConfigs: FieldConfig<T>[];
   submitLabel: string;
   cancelLabel: string;
+  noValidate?: boolean;
+  isSubmitting?: boolean;
+  submitError?: string;
   onSubmit: (e: SubmitEvent) => void;
   onCancel: (e: MouseEvent) => void;
 }
@@ -16,9 +19,12 @@ export function DynamicForm({
   cancelLabel,
   onSubmit,
   onCancel,
+  noValidate = false,
+  isSubmitting = false,
+  submitError,
 }: DynamicFormConfig<number | string>) {
   const fields = fieldConfigs.map((fieldConfig) => (
-    <div className="form-field">
+    <div className="form-field" key={fieldConfig.id}>
       <label htmlFor={fieldConfig.id}>{fieldConfig.label}</label>
       <input
         id={fieldConfig.id}
@@ -26,12 +32,21 @@ export function DynamicForm({
         onChange={(e) => fieldConfig.onChange(String(e.target.value))}
         placeholder={fieldConfig.placeholder}
         value={fieldConfig.value}
+        step={fieldConfig.step}
+        aria-invalid={fieldConfig.error ? true : undefined}
+        aria-describedby={fieldConfig.error ? `${fieldConfig.id}-error` : undefined}
       />
+      {fieldConfig.error && (
+        <p id={`${fieldConfig.id}-error`} className="form-error" role="alert">
+          {fieldConfig.error}
+        </p>
+      )}
     </div>
   ));
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} noValidate={noValidate}>
       {fields}
+      {submitError && <p className="form-error" role="alert">{submitError}</p>}
       <div className="form-actions">
         <button
           type="button"
@@ -40,7 +55,7 @@ export function DynamicForm({
         >
           {cancelLabel}
         </button>
-        <button type="submit" className="button button--primary">
+        <button type="submit" className="button button--primary" disabled={isSubmitting}>
           {submitLabel}
         </button>
       </div>
