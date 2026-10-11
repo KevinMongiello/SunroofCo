@@ -1,33 +1,36 @@
-import { useCallback, useEffect, useState } from "react";
+import { useApiQuery } from "../hooks/useApiQuery";
+import { RequestStatus } from "../components/RequestStatus/RequestStatus";
+import { useState } from "react";
 import type { User } from "../types/user";
 import { deleteUser, fetchAllUsers } from "../api/users";
 import { UserTable } from "../components/Users/UserTable";
 import { useNavigate } from "react-router-dom";
 import { AppHeader } from "../components/AppHeader/AppHeader";
 
+const loadUsers = () => fetchAllUsers();
+
 export const UsersPage = () => {
   const navigate = useNavigate();
-  const [users, setUsers] = useState<User[]>([]);
-  const pageFetchUsers = useCallback(async () => {
-    const users = await fetchAllUsers();
-    setUsers(users);
-  }, []);
+  const query = useApiQuery(
+    loadUsers,
+    "Unable to load users. Please try again.",
+  );
+  const [deleteError, setDeleteError] = useState("");
 
-  useEffect(() => {
-    pageFetchUsers();
-  }, []);
+  async function onDelete(id: string) {
+    setDeleteError("");
+    try {
+      await deleteUser(id);
+      query.retry();
+    } catch {
+      setDeleteError("Unable to delete the user. Please try again.");
+    }
+  }
 
-  const onDelete = useCallback(async (userId: string) => {
-    await deleteUser(userId);
-    pageFetchUsers();
-  }, []);
-
-  const onEdit = useCallback((user: User) => {
-    navigate("/users/" + user.id + "/edit");
-  }, []);
+  const onEdit = (row: User) => navigate("/users/" + row.id + "/edit");
 
   const buttonConfigs = [
-    { onClick: () => navigate("/users/new"), label: "+ Add User" }
+    { onClick: () => navigate("/users/new"), label: "+ Add User" },
   ];
 
   return (
@@ -37,7 +40,15 @@ export const UsersPage = () => {
         h2Text="Manage team members and their information."
         buttonConfigs={buttonConfigs}
       />
-      <UserTable users={users} onEdit={onEdit} onDelete={onDelete} />
+      <RequestStatus {...query} />
+      {deleteError && <p role="alert">{deleteError}</p>}
+      {!query.isLoading && !query.error && (
+        <UserTable
+          users={query.data ?? []}
+          onEdit={onEdit}
+          onDelete={onDelete}
+        />
+      )}
     </main>
   );
 };

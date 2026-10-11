@@ -1,5 +1,5 @@
 import type { CreateUser, User } from "../types/user";
-import { requestJson } from "./requests";
+import { requestJson, requestVoid } from "./requests";
 
 export function fetchAllUsers() {
   return requestJson<User[]>("/users");
@@ -17,14 +17,14 @@ export function createUser(data: CreateUser) {
 }
 
 export function updateUser(id: string, data: Partial<CreateUser>) {
-  return requestJson<unknown>(`/users/${id}`, {
+  return requestVoid(`/users/${id}`, {
     method: "PATCH",
     body: JSON.stringify(data),
   });
 }
 
 export function deleteUser(id: string) {
-  return requestJson<unknown>(`/users/${id}`, {
+  return requestVoid(`/users/${id}`, {
     method: "DELETE",
   });
 }

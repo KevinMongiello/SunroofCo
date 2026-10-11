@@ -1,4 +1,4 @@
-import { requestJson } from "./requests";
+import { requestJson, requestVoid } from "./requests";
 import type {
   CreateTimeCard,
   TimeCard,
@@ -57,14 +57,14 @@ export function createTimecard(data: CreateTimeCard) {
 }
 
 export function updateTimecard(id: string, data: UpdateTimecard) {
-  return requestJson<unknown>(`/timecards/${id}`, {
+  return requestVoid(`/timecards/${id}`, {
     method: "PATCH",
     body: JSON.stringify(data),
   });
 }
 
 export function deleteTimecard(id: string) {
-  return requestJson<unknown>(`/timecards/${id}`, {
+  return requestVoid(`/timecards/${id}`, {
     method: "DELETE",
   });
 }

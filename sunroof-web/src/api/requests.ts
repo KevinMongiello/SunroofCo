@@ -1,5 +1,4 @@
-const API_URL =
-  import.meta.env.VITE_API_URL ?? "http://localhost:3000";
+const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
 
 async function request(
   path: string,
@@ -37,4 +36,12 @@ export async function requestText(
 ): Promise<string> {
   const response = await request(path, options);
   return response.text();
+}
+
+// Mutations whose callers only need confirmation may return an empty body.
+export async function requestVoid(
+  path: string,
+  options?: RequestInit,
+): Promise<void> {
+  await request(path, options);
 }

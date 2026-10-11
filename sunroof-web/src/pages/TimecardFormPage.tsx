@@ -1,6 +1,8 @@
+import { useApiQuery } from "../hooks/useApiQuery";
+import { RequestStatus } from "../components/RequestStatus/RequestStatus";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { useCallback, useEffect, useState } from "react";
-import type { CreateTimeCardForm, TimeCard } from "../types/timecards";
+import { useCallback } from "react";
+import type { CreateTimeCardForm } from "../types/timecards";
 import {
   createTimecard,
   fetchTimecard,
@@ -10,11 +12,6 @@ import { TimecardForm } from "../components/Timecards/TimecardForm";
 import { fetchAllUsers } from "../api/users";
 import { AppHeader } from "../components/AppHeader/AppHeader";
 
-// Use this as default FK, since selecting a user
-// as part of the "new timecard" workflow
-// is out of scope for this project.
-let DEFAULT_USER_ID = "0000-0000-0000-00000";
-
 export const TimecardFormPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -22,39 +19,32 @@ export const TimecardFormPage = () => {
 
   const returnTo = searchParams.get("returnTo") ?? "/timecards";
   const toNavBack = () => navigate(returnTo);
-  const toTimecardsPage = () => navigate('/timecards');
+  const toTimecardsPage = () => navigate("/timecards");
 
   const isEditing = !!id;
-  const [initialValues, setInitialValues] = useState<TimeCard | null>(null);
-
-  useEffect(() => {
-    fetchAllUsers().then((users) => {
-      if (users?.[0]) {
-        DEFAULT_USER_ID = users[0].id;
-      }
-    });
-  }, []);
-
-  useEffect(() => {
+  const load = useCallback(async () => {
     if (id) {
-      fetchTimecard(id).then((data) => {
-        setInitialValues(data);
-      });
+      const record = await fetchTimecard(id);
+      if (!record) throw new Error("Timecard not found");
+      return { record, userId: record.userId };
     }
+    const users = await fetchAllUsers();
+    if (!users[0]) throw new Error("No users available");
+    return { record: null, userId: users[0].id };
   }, [id]);
+  const query = useApiQuery(
+    load,
+    "Unable to prepare the timecard. Check that the timecard exists and at least one user is available.",
+  );
+  const initialValues = query.data?.record ?? null;
 
-  const onSubmit = useCallback(async (data: CreateTimeCardForm) => {
+  async function onSubmit(data: CreateTimeCardForm) {
     if (id) {
       await updateTimecard(id, data);
     } else {
-      await createTimecard({ ...data, userId: DEFAULT_USER_ID });
+      await createTimecard({ ...data, userId: query.data!.userId });
     }
-
     toTimecardsPage();
-  }, []);
-
-  if (isEditing && !initialValues) {
-    return <p>Loading timecards...</p>;
   }
 
   return (
@@ -63,12 +53,15 @@ export const TimecardFormPage = () => {
         navBack={toNavBack}
         h1Text={isEditing ? "Update Timecard" : "Create Timecard"}
       />
-      <TimecardForm
-        initialValues={initialValues}
-        submitLabel={isEditing ? "Update Timecard" : "Create Timecard"}
-        onSubmit={onSubmit}
-        onCancel={() => toNavBack()}
-      ></TimecardForm>
+      <RequestStatus {...query} />
+      {!query.isLoading && !query.error && (
+        <TimecardForm
+          initialValues={initialValues}
+          submitLabel={isEditing ? "Update Timecard" : "Create Timecard"}
+          onSubmit={onSubmit}
+          onCancel={() => toNavBack()}
+        ></TimecardForm>
+      )}
     </main>
   );
 };
