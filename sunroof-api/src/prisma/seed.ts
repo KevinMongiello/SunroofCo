@@ -213,6 +213,75 @@ async function main() {
       scheduledEnd: '2026-10-21',
       estimatedHours: 6,
     },
+
+    // Upcoming work through October, with three November tickets still
+    // upcoming on October 31, 2026.
+    {
+      projectId: projects[0].id,
+      title: 'Inspect roof perimeter flashing',
+      description:
+        'Inspect perimeter flashing and seal gaps before the next installation phase.',
+      status: 'SCHEDULED',
+      priority: 'MEDIUM',
+      scheduledStart: '2026-10-16',
+      scheduledEnd: '2026-10-16',
+      estimatedHours: 8,
+    },
+    {
+      projectId: projects[1].id,
+      title: 'Test loading dock roof drainage',
+      description:
+        'Test drainage near the loading dock and document any remaining ponding.',
+      status: 'SCHEDULED',
+      priority: 'MEDIUM',
+      scheduledStart: '2026-10-23',
+      scheduledEnd: '2026-10-23',
+      estimatedHours: 6,
+    },
+    {
+      projectId: projects[2].id,
+      title: 'Seal roof penetrations',
+      description:
+        'Seal maintenance areas identified during the preventative roof inspection.',
+      status: 'SCHEDULED',
+      priority: 'MEDIUM',
+      scheduledStart: '2026-10-30',
+      scheduledEnd: '2026-10-30',
+      estimatedHours: 8,
+    },
+    {
+      projectId: projects[0].id,
+      title: 'Perform final membrane quality inspection',
+      description:
+        'Inspect membrane seams and perimeter details before project handover.',
+      status: 'SCHEDULED',
+      priority: 'MEDIUM',
+      scheduledStart: '2026-11-02',
+      scheduledEnd: '2026-11-02',
+      estimatedHours: 8,
+    },
+    {
+      projectId: projects[2].id,
+      title: 'Verify roof drain repairs',
+      description:
+        'Verify drain flow and confirm maintenance repairs are complete.',
+      status: 'SCHEDULED',
+      priority: 'MEDIUM',
+      scheduledStart: '2026-11-04',
+      scheduledEnd: '2026-11-04',
+      estimatedHours: 6,
+    },
+    {
+      projectId: projects[0].id,
+      title: 'Complete roof handover walkthrough',
+      description:
+        'Walk the completed roof with the customer and document final acceptance items.',
+      status: 'SCHEDULED',
+      priority: 'MEDIUM',
+      scheduledStart: '2026-11-06',
+      scheduledEnd: '2026-11-06',
+      estimatedHours: 4,
+    },
   ]);
 
   // --------------------------------------------------
@@ -278,6 +347,32 @@ async function main() {
     {
       userId: users[1].id,
       ticketId: tickets[7].id,
+    },
+
+    // Upcoming scheduled work
+    {
+      userId: users[0].id,
+      ticketId: tickets[8].id,
+    },
+    {
+      userId: users[2].id,
+      ticketId: tickets[9].id,
+    },
+    {
+      userId: users[1].id,
+      ticketId: tickets[10].id,
+    },
+    {
+      userId: users[0].id,
+      ticketId: tickets[11].id,
+    },
+    {
+      userId: users[1].id,
+      ticketId: tickets[12].id,
+    },
+    {
+      userId: users[0].id,
+      ticketId: tickets[13].id,
     },
   ]);
 
