@@ -3,7 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import "./AppHeader.css";
 
 interface AppHeaderProps {
-  buttonConfigs?: { label: string; onClick: () => void }[];
+  buttonConfigs?: { label: string; onClick: () => void; disabled?: boolean }[];
   h1Text?: string;
   h2Text?: string;
   navBack?: () => void;
@@ -49,6 +49,7 @@ export const AppHeader = ({
               key={config.label}
               className="button button--primary"
               onClick={config.onClick}
+              disabled={config.disabled}
             >
               {config.label}
             </button>

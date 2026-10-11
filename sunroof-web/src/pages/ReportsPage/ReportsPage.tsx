@@ -22,7 +22,11 @@ export const ReportsPage = () => {
   );
   const laborReport = query.data;
 
-  const buttonConfigs = [{ onClick: () => {}, label: "Export CSV" }];
+  const buttonConfigs = [{
+    onClick: query.retry,
+    label: query.isLoading ? "Refreshing…" : "Refresh report",
+    disabled: query.isLoading,
+  }];
   const valuelVsLabor = [
     {
       name: "Labor Cost",
