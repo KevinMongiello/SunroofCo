@@ -1,6 +1,17 @@
 import { db } from './db.js';
 
 async function main() {
+  // Anchor the demo to the day it is seeded so reports show recent activity.
+  const today = new Date();
+  const dateFromToday = (days: number): string => {
+    const date = new Date(today);
+    date.setDate(date.getDate() + days);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   // --------------------------------------------------
   // Reset database
   // Delete children / join rows before parent rows
@@ -65,24 +76,24 @@ async function main() {
       description:
         'Full roof replacement for Acme headquarters including membrane, insulation, and drainage work.',
       status: 'ACTIVE',
-      startDate: '2026-09-15',
-      endDate: '2026-11-15',
+      startDate: dateFromToday(-14),
+      endDate: dateFromToday(40),
     },
     {
       name: 'Beacon Warehouse Repair',
       description:
         'Repair recurring leaks and damaged roof sections at the Beacon warehouse.',
       status: 'ACTIVE',
-      startDate: '2026-10-01',
-      endDate: '2026-10-31',
+      startDate: dateFromToday(-3),
+      endDate: dateFromToday(25),
     },
     {
       name: 'Northstar Office Maintenance',
       description:
         'Preventative maintenance and inspection work for Northstar offices.',
       status: 'PLANNED',
-      startDate: '2026-10-20',
-      endDate: '2026-11-10',
+      startDate: dateFromToday(14),
+      endDate: dateFromToday(35),
     },
   ]);
 
@@ -126,9 +137,9 @@ async function main() {
         'Remove approximately 400 sq ft of damaged membrane and inspect insulation below for water intrusion.',
       status: 'COMPLETED',
       priority: 'HIGH',
-      scheduledStart: '2026-09-22',
-      scheduledEnd: '2026-09-23',
-      completedAt: '2026-09-23',
+      scheduledStart: dateFromToday(-5),
+      scheduledEnd: dateFromToday(-4),
+      completedAt: dateFromToday(-4),
       estimatedHours: 16,
     },
     {
@@ -138,8 +149,8 @@ async function main() {
         'Replace wet insulation discovered during membrane removal and prepare the surface for new TPO installation.',
       status: 'IN_PROGRESS',
       priority: 'HIGH',
-      scheduledStart: '2026-10-05',
-      scheduledEnd: '2026-10-07',
+      scheduledStart: dateFromToday(-1),
+      scheduledEnd: dateFromToday(1),
       estimatedHours: 24,
     },
     {
@@ -149,8 +160,8 @@ async function main() {
         'Install new TPO membrane over the prepared roof section and seal all perimeter details.',
       status: 'SCHEDULED',
       priority: 'MEDIUM',
-      scheduledStart: '2026-10-08',
-      scheduledEnd: '2026-10-10',
+      scheduledStart: dateFromToday(2),
+      scheduledEnd: dateFromToday(4),
       estimatedHours: 20,
     },
 
@@ -162,9 +173,9 @@ async function main() {
         'Investigate leak path near the loading dock and identify failed flashing or membrane seams.',
       status: 'COMPLETED',
       priority: 'URGENT',
-      scheduledStart: '2026-10-01',
-      scheduledEnd: '2026-10-01',
-      completedAt: '2026-10-01',
+      scheduledStart: dateFromToday(-3),
+      scheduledEnd: dateFromToday(-3),
+      completedAt: dateFromToday(-3),
       estimatedHours: 6,
     },
     {
@@ -174,8 +185,8 @@ async function main() {
         'Remove failed flashing near the loading dock and install replacement flashing.',
       status: 'BLOCKED',
       priority: 'HIGH',
-      scheduledStart: '2026-10-06',
-      scheduledEnd: '2026-10-06',
+      scheduledStart: dateFromToday(0),
+      scheduledEnd: dateFromToday(0),
       estimatedHours: 8,
     },
     {
@@ -185,8 +196,8 @@ async function main() {
         'Reseal open membrane seams identified during the leak investigation.',
       status: 'SCHEDULED',
       priority: 'MEDIUM',
-      scheduledStart: '2026-10-07',
-      scheduledEnd: '2026-10-07',
+      scheduledStart: dateFromToday(1),
+      scheduledEnd: dateFromToday(1),
       estimatedHours: 10,
     },
 
@@ -198,8 +209,8 @@ async function main() {
         'Perform a full preventative roof inspection and document areas requiring maintenance.',
       status: 'BACKLOG',
       priority: 'MEDIUM',
-      scheduledStart: '2026-10-20',
-      scheduledEnd: '2026-10-20',
+      scheduledStart: dateFromToday(14),
+      scheduledEnd: dateFromToday(14),
       estimatedHours: 8,
     },
     {
@@ -209,13 +220,12 @@ async function main() {
         'Remove debris from roof drains and verify proper water flow.',
       status: 'BACKLOG',
       priority: 'LOW',
-      scheduledStart: '2026-10-21',
-      scheduledEnd: '2026-10-21',
+      scheduledStart: dateFromToday(15),
+      scheduledEnd: dateFromToday(15),
       estimatedHours: 6,
     },
 
-    // Upcoming work through October, with three November tickets still
-    // upcoming on October 31, 2026.
+    // Upcoming work over the next month.
     {
       projectId: projects[0].id,
       title: 'Inspect roof perimeter flashing',
@@ -223,8 +233,8 @@ async function main() {
         'Inspect perimeter flashing and seal gaps before the next installation phase.',
       status: 'SCHEDULED',
       priority: 'MEDIUM',
-      scheduledStart: '2026-10-16',
-      scheduledEnd: '2026-10-16',
+      scheduledStart: dateFromToday(10),
+      scheduledEnd: dateFromToday(10),
       estimatedHours: 8,
     },
     {
@@ -234,8 +244,8 @@ async function main() {
         'Test drainage near the loading dock and document any remaining ponding.',
       status: 'SCHEDULED',
       priority: 'MEDIUM',
-      scheduledStart: '2026-10-23',
-      scheduledEnd: '2026-10-23',
+      scheduledStart: dateFromToday(17),
+      scheduledEnd: dateFromToday(17),
       estimatedHours: 6,
     },
     {
@@ -245,8 +255,8 @@ async function main() {
         'Seal maintenance areas identified during the preventative roof inspection.',
       status: 'SCHEDULED',
       priority: 'MEDIUM',
-      scheduledStart: '2026-10-30',
-      scheduledEnd: '2026-10-30',
+      scheduledStart: dateFromToday(24),
+      scheduledEnd: dateFromToday(24),
       estimatedHours: 8,
     },
     {
@@ -256,8 +266,8 @@ async function main() {
         'Inspect membrane seams and perimeter details before project handover.',
       status: 'SCHEDULED',
       priority: 'MEDIUM',
-      scheduledStart: '2026-11-02',
-      scheduledEnd: '2026-11-02',
+      scheduledStart: dateFromToday(27),
+      scheduledEnd: dateFromToday(27),
       estimatedHours: 8,
     },
     {
@@ -267,8 +277,8 @@ async function main() {
         'Verify drain flow and confirm maintenance repairs are complete.',
       status: 'SCHEDULED',
       priority: 'MEDIUM',
-      scheduledStart: '2026-11-04',
-      scheduledEnd: '2026-11-04',
+      scheduledStart: dateFromToday(29),
+      scheduledEnd: dateFromToday(29),
       estimatedHours: 6,
     },
     {
@@ -278,8 +288,8 @@ async function main() {
         'Walk the completed roof with the customer and document final acceptance items.',
       status: 'SCHEDULED',
       priority: 'MEDIUM',
-      scheduledStart: '2026-11-06',
-      scheduledEnd: '2026-11-06',
+      scheduledStart: dateFromToday(31),
+      scheduledEnd: dateFromToday(31),
       estimatedHours: 4,
     },
   ]);
@@ -377,39 +387,40 @@ async function main() {
   ]);
 
   // --------------------------------------------------
-  // Time cards
+  // Time cards within the default seven-day report range.
+  // Use past days because the labor report excludes its end date.
   // --------------------------------------------------
 
   await db.orm.public.TimeCard.createAll([
     {
       userId: users[0].id,
       ticketId: tickets[0].id,
-      date: '2026-09-22',
+      date: dateFromToday(-5),
       hoursWorked: 8,
     },
     {
       userId: users[0].id,
       ticketId: tickets[0].id,
-      date: '2026-09-23',
+      date: dateFromToday(-4),
       hoursWorked: 8,
     },
     {
       userId: users[1].id,
       ticketId: tickets[0].id,
-      date: '2026-09-22',
+      date: dateFromToday(-5),
       hoursWorked: 7.5,
     },
     {
       userId: users[2].id,
       ticketId: tickets[3].id,
-      date: '2026-10-01',
+      date: dateFromToday(-3),
       hoursWorked: 6,
     },
     {
       userId: users[0].id,
       ticketId: tickets[1].id,
-      date: '2026-10-05',
-      hoursWorked: 8.25,
+      date: dateFromToday(-1),
+      hoursWorked: 8,
     },
   ]);
 
