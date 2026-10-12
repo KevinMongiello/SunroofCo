@@ -66,7 +66,7 @@ export const ReportsPage = () => {
           <section className="reports-charts">
             <div className="paper pd-16">
               <AppHeader
-                h1Text="Hours By User"
+                h1Text="Hours By Worker"
                 h2Text="Total hours logged in this period."
                 scale="md"
               />

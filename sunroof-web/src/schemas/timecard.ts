@@ -17,7 +17,7 @@ function isWithinLastSixMonths(date: string): boolean {
 }
 
 export const timecardFormSchema = z.object({
-  userId: z.string().trim().min(1, "Select a user."),
+  userId: z.string().trim().min(1, "Select a worker."),
   date: z.string().trim().min(1, "Enter a date.")
     .pipe(z.iso.date({ error: "Enter a valid date in YYYY-MM-DD format." })
       .refine(isWithinLastSixMonths, {

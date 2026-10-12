@@ -9,7 +9,7 @@ export const QuickActions = ({ onAddUser, onAddTimecard}: QuickActionsProps) => 
     <div className="quick-actions paper">
       <h2>QuickActions</h2>
       <div className='menu'>
-        <button onClick={onAddUser} className='button button--primary'>+ Add User</button>
+        <button onClick={onAddUser} className='button button--primary'>+ Add Worker</button>
         <button onClick={onAddTimecard} className='button button--secondary'>+ Add Timecard</button>
       </div>
     </div>

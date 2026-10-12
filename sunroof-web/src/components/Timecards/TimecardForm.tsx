@@ -62,9 +62,9 @@ export const TimecardForm = ({
 
   const userFieldConfig = {
     id: "userId",
-    label: "User",
+    label: "Worker",
     inputType: "select",
-    placeholder: "Select a user",
+    placeholder: "Select a worker",
     options: users.map((user) => ({ value: user.id, label: user.name })),
     onChange: setUserId,
     value: userId,

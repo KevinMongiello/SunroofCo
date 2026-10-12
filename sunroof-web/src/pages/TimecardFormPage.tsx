@@ -28,12 +28,12 @@ export const TimecardFormPage = () => {
       id ? fetchTimecard(id) : Promise.resolve(null),
     ]);
     if (id && !record) throw new Error("Timecard not found");
-    if (!users[0]) throw new Error("No users available");
+    if (!users[0]) throw new Error("No workers available");
     return { record, users };
   }, [id]);
   const query = useApiQuery(
     load,
-    "Unable to prepare the timecard. Check that the timecard exists and at least one user is available.",
+    "Unable to prepare the timecard. Check that the timecard exists and at least one worker is available.",
   );
   const initialValues = query.data?.record ?? null;
 

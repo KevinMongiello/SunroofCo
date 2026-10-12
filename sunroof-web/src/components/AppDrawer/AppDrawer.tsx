@@ -26,7 +26,7 @@ export const AppDrawer = () => {
             }
           >
             <Users />
-            Users
+            Workers
           </NavLink>
           <NavLink
             to={"/timecards"}

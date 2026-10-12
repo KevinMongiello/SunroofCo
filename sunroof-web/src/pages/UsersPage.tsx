@@ -13,7 +13,7 @@ export const UsersPage = () => {
   const navigate = useNavigate();
   const query = useApiQuery(
     loadUsers,
-    "Unable to load users. Please try again.",
+    "Unable to load workers. Please try again.",
   );
   const [deleteError, setDeleteError] = useState("");
 
@@ -23,20 +23,20 @@ export const UsersPage = () => {
       await deleteUser(id);
       query.retry();
     } catch {
-      setDeleteError("Unable to delete the user. Please try again.");
+      setDeleteError("Unable to delete the worker. Please try again.");
     }
   }
 
   const onEdit = (row: User) => navigate("/users/" + row.id + "/edit");
 
   const buttonConfigs = [
-    { onClick: () => navigate("/users/new"), label: "+ Add User" },
+    { onClick: () => navigate("/users/new"), label: "+ Add Worker" },
   ];
 
   return (
     <main>
       <AppHeader
-        h1Text="Users"
+        h1Text="Workers"
         h2Text="Manage team members and their information."
         buttonConfigs={buttonConfigs}
       />

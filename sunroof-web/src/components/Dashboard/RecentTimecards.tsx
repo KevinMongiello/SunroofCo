@@ -16,7 +16,7 @@ export const RecentTimecards = ({ timecards = [], onViewAll }: RecentTimecardsPr
       <table className="table">
         <thead>
           <tr>
-            <th>User</th>
+            <th>Worker</th>
             <th>Date</th>
             <th>Hours</th>
           </tr>

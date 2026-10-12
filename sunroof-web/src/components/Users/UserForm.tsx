@@ -66,7 +66,7 @@ export const UserForm = ({
     try {
       await onSubmit(result.data);
     } catch {
-      setSubmitError("Unable to save the user. Please try again.");
+      setSubmitError("Unable to save the worker. Please try again.");
     } finally {
       setIsSubmitting(false);
     }

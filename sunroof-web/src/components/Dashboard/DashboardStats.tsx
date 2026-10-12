@@ -16,7 +16,7 @@ export const DashboardStats = ({
     <div className="stat-cards">
       <StatCard
         value={totalUsers?.toString() ?? '--'}
-        label="Total Users"
+        label="Total Workers"
         icon={User}
         className="blue"
       />

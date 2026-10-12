@@ -20,12 +20,12 @@ export const UserFormPage = () => {
   const load = useCallback(async () => {
     if (!id) return null;
     const record = await fetchUser(id);
-    if (!record) throw new Error("User not found");
+    if (!record) throw new Error("Worker not found");
     return record;
   }, [id]);
   const query = useApiQuery(
     load,
-    "Unable to load this user. It may no longer exist.",
+    "Unable to load this worker. It may no longer exist.",
   );
   const initialValues = query.data ?? null;
 
@@ -42,7 +42,7 @@ export const UserFormPage = () => {
     <main>
       <AppHeader
         navBack={toNavBack}
-        h1Text={isEditing ? "Update User" : "Create User"}
+        h1Text={isEditing ? "Update Worker" : "Create Worker"}
       />
       <RequestStatus {...query} />
       {!query.isLoading && !query.error && (
@@ -50,7 +50,7 @@ export const UserFormPage = () => {
           onSubmit={onSubmit}
           initialValues={initialValues}
           onCancel={() => toNavBack()}
-          submitLabel={isEditing ? "Update User" : "Create User"}
+          submitLabel={isEditing ? "Update Worker" : "Create Worker"}
         ></UserForm>
       )}
     </main>
