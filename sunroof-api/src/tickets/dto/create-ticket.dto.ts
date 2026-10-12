@@ -1,4 +1,15 @@
-import { IsArray, IsIn, IsNumber, IsOptional, IsString, IsUUID, Matches, Min } from 'class-validator';
+import { IsDateOnly } from '../../validation/is-date-only.js';
+import {
+  IsArray,
+  IsIn,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUUID,
+  Matches,
+  Min,
+  ValidateIf,
+} from 'class-validator';
 
 export const TICKET_STATUSES = [
   'BACKLOG',
@@ -17,38 +28,39 @@ export class CreateTicketDto {
   projectId: string;
 
   @IsString()
+  @Matches(/\S/, { message: 'title must not be blank' })
   title: string;
 
   @IsOptional()
   @IsString()
   description?: string;
 
-  @IsOptional()
+  @ValidateIf((_object, value) => value !== undefined)
   @IsIn(TICKET_STATUSES)
   status?: TicketStatus;
 
-  @IsOptional()
+  @ValidateIf((_object, value) => value !== undefined)
   @IsIn(TICKET_PRIORITIES)
   priority?: TicketPriority;
 
   @IsOptional()
-  @Matches(/^\d{4}-\d{2}-\d{2}$/)
+  @IsDateOnly()
   scheduledStart?: string;
-  
+
   @IsOptional()
-  @Matches(/^\d{4}-\d{2}-\d{2}$/)
+  @IsDateOnly()
   scheduledEnd?: string;
 
   @IsOptional()
-  @Matches(/^\d{4}-\d{2}-\d{2}$/)
+  @IsDateOnly()
   completedAt?: string;
-  
+
   @IsOptional()
   @IsNumber()
   @Min(0)
   estimatedHours?: number;
 
-  @IsOptional()
+  @ValidateIf((_object, value) => value !== undefined)
   @IsArray()
   @IsUUID('all', { each: true })
   userIds?: string[];

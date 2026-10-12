@@ -7,7 +7,7 @@ export type TimeCardSortFields = keyof UpdateTimecardDto;
 export type TimecardSortDirection = 'asc' | 'desc';
 interface findAllOptions {
   includeUser?: boolean;
-  limit?: string;
+  limit?: number;
   orderBy?: TimeCardSortFields;
   orderDir?: TimecardSortDirection;
 }
@@ -20,7 +20,7 @@ export class TimecardsService {
     const { limit, includeUser, orderBy, orderDir } = options;
     let query = this.prisma.db.orm.public.TimeCard;
     if (includeUser) query = query.include('user');
-    if (limit) query = query.limit(Number(limit));
+    if (limit) query = query.limit(limit);
     if (orderBy)
       query = query.orderBy((timecard) =>
         timecard[orderBy][orderDir || 'asc'](),

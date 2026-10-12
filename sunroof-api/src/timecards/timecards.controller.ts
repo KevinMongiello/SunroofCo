@@ -1,25 +1,33 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { TimecardsService } from './timecards.service.js';
-import type { TimecardSortDirection, TimeCardSortFields } from './timecards.service.js';
+import { TimecardsQueryDto } from './dto/timecards-query.dto.js';
 import { CreateTimecardDto } from './dto/create-timecard.dto.js';
-import type { UpdateTimecardDto } from './dto/update-timecard.dto.js';
+import { UpdateTimecardDto } from './dto/update-timecard.dto.js';
 
 @Controller('timecards')
 export class TimecardsController {
   constructor(private readonly timecardsService: TimecardsService) {}
 
   @Get()
-  async findAll(
-    @Query('includeUser') includeUser?: string,
-    @Query('limit') limit?: string,
-    @Query('orderBy') orderBy?: TimeCardSortFields,
-    @Query('orderDir') orderDir?: TimecardSortDirection
-  ) {
-    return await this.timecardsService.findAll({ includeUser: includeUser === 'true', limit, orderBy, orderDir });
+  async findAll(@Query() query: TimecardsQueryDto) {
+    return await this.timecardsService.findAll({
+      ...query,
+      includeUser: query.includeUser === 'true',
+    });
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.timecardsService.findOne(id);
   }
 
@@ -30,14 +38,14 @@ export class TimecardsController {
 
   @Patch(':id')
   update(
-    @Param('id') id: string,
-    @Body() dto: UpdateTimecardDto
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Body() dto: UpdateTimecardDto,
   ) {
     return this.timecardsService.update(id, dto);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string) {
+  delete(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.timecardsService.delete(id);
   }
 }

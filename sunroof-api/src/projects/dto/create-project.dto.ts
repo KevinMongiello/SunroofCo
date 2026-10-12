@@ -1,3 +1,4 @@
+import { IsDateOnly } from '../../validation/is-date-only.js';
 import {
   IsArray,
   IsIn,
@@ -5,6 +6,7 @@ import {
   IsString,
   IsUUID,
   Matches,
+  ValidateIf,
 } from 'class-validator';
 
 export const PROJECT_STATUSES = [
@@ -15,30 +17,30 @@ export const PROJECT_STATUSES = [
   'ARCHIVED',
 ] as const;
 
-export type ProjectStatus =
-  (typeof PROJECT_STATUSES)[number];
+export type ProjectStatus = (typeof PROJECT_STATUSES)[number];
 
 export class CreateProjectDto {
   @IsString()
+  @Matches(/\S/, { message: 'name must not be blank' })
   name: string;
 
   @IsOptional()
   @IsString()
   description?: string;
 
-  @IsOptional()
+  @ValidateIf((_object, value) => value !== undefined)
   @IsIn(PROJECT_STATUSES)
   status?: ProjectStatus;
 
   @IsOptional()
-  @Matches(/^\d{4}-\d{2}-\d{2}$/)
+  @IsDateOnly()
   startDate?: string;
 
   @IsOptional()
-  @Matches(/^\d{4}-\d{2}-\d{2}$/)
+  @IsDateOnly()
   endDate?: string;
 
-  @IsOptional()
+  @ValidateIf((_object, value) => value !== undefined)
   @IsArray()
   @IsUUID('all', { each: true })
   userIds?: string[];

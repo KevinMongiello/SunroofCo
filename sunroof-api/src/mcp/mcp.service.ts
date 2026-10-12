@@ -44,7 +44,7 @@ export class McpService {
           description:
             'Find projects via partial, case-insensitive name match.',
           inputSchema: z.object({
-            name: z.string(),
+            name: z.string().trim().min(1),
           }),
         },
         async ({ name }) => {
@@ -68,11 +68,12 @@ export class McpService {
           description:
             'Gets full project details by project ID, including assigned users and related tickets. Use this when you need project context for summaries, completed or upcoming work, status, or staffing.',
           inputSchema: z.object({
-            projectId: z.string(),
+            projectId: z.uuid(),
           }),
         },
         async ({ projectId }) => {
-          const results = await this.projectService.getProjectDetails(projectId)
+          const results =
+            await this.projectService.getProjectDetails(projectId);
 
           return {
             content: [
