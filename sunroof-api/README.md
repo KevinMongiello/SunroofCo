@@ -1,114 +1,79 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# SunRoof API demo
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+The Docker image runs the Nest API and a disposable Postgres 15 database in one
+container. Each startup creates a fresh local database, applies the committed
+migrations, loads `src/prisma/seed.ts`, and then starts the API. Edits made during
+a demo last only until the container restarts. No database service or disk is needed.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Deploy to Render
 
-## Description
+1. Commit and push the repository changes, including the root `render.yaml`,
+   `sunroof-api/Dockerfile`, and `sunroof-api/docker/start-demo.sh`.
+2. In Render, select **New → Blueprint** and connect the repository and branch.
+   Use `render.yaml` as the Blueprint path.
+3. Enter the requested environment values:
+   - `ANTHROPIC_API_KEY`: your Anthropic key.
+   - `CORS_ORIGINS`: the frontend's origin, without a trailing slash. For local
+     Vite development, use `http://localhost:5173`. Multiple origins can be
+     comma-separated.
+4. Review and deploy the Blueprint. It declares one paid Docker web service (`0.5c-512mb`: 0.5 CPU, 512 MB RAM).
+5. Open `https://<assigned-service-name>.onrender.com/health`; expect
+   `{"status":"ok"}`. Startup logs should show migrations, `Seed complete`, and
+   the Nest server starting.
+6. Set the frontend's `VITE_API_URL` to that API URL, without a trailing slash.
+   Restart local Vite, or rebuild/redeploy the hosted frontend.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+The startup script derives `SUNROOF_MCP_URL` from Render's own external service
+URL. You can explicitly override it if necessary. `DATABASE_URL` is always set
+by the demo startup script to its own local database, so it cannot accidentally
+seed a separately configured database.
 
-## Project setup
+The paid service avoids the Free tier's idle spin-down. Restarts and redeploys
+still load fresh seed data. See [Render compute plans](https://render.com/docs/blueprint-spec#plan)
+and [pricing](https://render.com/pricing).
 
-```bash
-$ npm install
+### If you already created a Render web service
+
+Use these settings instead of creating a second service through a Blueprint:
+
+| Setting | Value |
+| --- | --- |
+| Runtime | Docker |
+| Root Directory | Leave blank (repository root) |
+| Dockerfile Path | `sunroof-api/Dockerfile` |
+| Docker Build Context Directory | `sunroof-api` |
+| Docker Command | Leave blank (use the image default) |
+| Pre-Deploy Command | Leave blank (initialization runs at startup) |
+| Health Check Path | `/health` |
+
+Set the environment variables above and deploy the updated branch. A separate
+Postgres service or attached disk is not used by this image.
+
+## Run locally
+
+Start Docker Desktop. From `sunroof-api`, create `.env` from `.env.example` if
+needed, fill in your Anthropic key, and run:
+
+```sh
+docker compose up --build -d
+docker compose logs -f api
 ```
 
-## Compile and run the project
+The API is at `http://localhost:3000`. Only the API port is published; Postgres
+listens on loopback inside the container. For local AI tool calls,
+`SUNROOF_MCP_URL` must point to an HTTPS endpoint reachable by Anthropic (such as
+your deployed Render API); Anthropic cannot reach your laptop's localhost.
 
-```bash
-# development
-$ npm run start
+## Implementation
 
-# watch mode
-$ npm run start:dev
+- Node 24 builds and runs the API; the image retains Prisma CLI dependencies.
+- The unprivileged `node` user runs both Postgres and the API.
+- `tini` and the startup script handle child processes and shutdown; the container
+  stops if either server exits.
+- Postgres initializes in a fresh temporary directory on every startup.
+- `/health` is a liveness endpoint, not a database query.
+- The seed has fixed September–November 2026 dates; update those for later demos.
+- `.dockerignore` keeps local `.env` files out of the image.
 
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Observability
-
-In production applications, observability is essential for understanding how your system behaves, detecting issues early, and maintaining reliable performance.
-
-[NestJS Observe](https://observe.nestjs.com) automatically instruments your NestJS application, giving you deep visibility into your system with minimal setup:
-
-- **Distributed tracing:** Follow requests across services and understand how they flow through your system.
-- **Waterfall analysis:** Visualize request execution and identify slow operations, bottlenecks, and unexpected delays.
-- **Performance analysis:** Analyze application performance in real time and quickly pinpoint areas that need optimization.
-- **Metrics:** Track key application and infrastructure metrics to understand system health and performance trends.
-- **Logging:** Centralize and correlate logs with traces and other telemetry to make debugging easier.
-- **Error tracking:** Detect errors quickly and investigate their root causes with the surrounding context.
-- **SLA monitoring:** Track service-level objectives and identify when your application is approaching or exceeding defined thresholds.
-- **Alarms and alerts:** Set up alerts for critical errors, performance degradation, SLA violations, and other anomalies so your team can react quickly.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Auto-instrument your application with [NestJS Observer](https://observer.nestjs.com). Distributed tracing, metrics, and logging made easy. Error tracking and performance monitoring for your NestJS applications.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+[Render Docker docs](https://render.com/docs/docker) ·
+[Render Blueprints](https://render.com/docs/infrastructure-as-code)

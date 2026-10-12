@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: sunroof-api
+    runtime: docker
+    plan: 0.5c-512mb
+    dockerfilePath: ./sunroof-api/Dockerfile
+    dockerContext: ./sunroof-api
+    healthCheckPath: /health
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+      - key: MAX_AI_TOKENS
+        value: "5000"
