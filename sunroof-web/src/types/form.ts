@@ -5,6 +5,7 @@ export interface FieldConfig<T> {
   error?: string;
   step?: number | "any";
   placeholder?: string;
+  options?: { value: string; label: string }[];
   value: T;
   onChange: (val: string) => void;
 }

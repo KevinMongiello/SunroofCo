@@ -1,12 +1,14 @@
 import { z } from "zod";
 import { timecardFormSchema } from "../../schemas/timecard";
 import type { CreateTimeCardForm, TimeCard } from "../../types/timecards";
+import type { User } from "../../types/user";
 import { useEffect, useState } from "react";
 import { DynamicForm } from "../DynamicForm/DynamicForm";
 
 interface TimecardProps {
   onSubmit: (data: CreateTimeCardForm) => void | Promise<void>;
   initialValues: TimeCard | null;
+  users: User[];
   submitLabel: string;
   onCancel: () => void;
 }
@@ -14,6 +16,7 @@ interface TimecardProps {
 export const TimecardForm = ({
   onSubmit,
   initialValues,
+  users,
   submitLabel,
   onCancel,
 }: TimecardProps) => {
@@ -21,6 +24,7 @@ export const TimecardForm = ({
   const [submitError, setSubmitError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [date, setDate] = useState(initialValues?.date ?? "");
+  const [userId, setUserId] = useState(initialValues?.userId ?? "");
   const [hoursWorked, setHoursWorked] = useState(
     String(initialValues?.hoursWorked ?? 0),
   );
@@ -29,6 +33,7 @@ export const TimecardForm = ({
     setErrors({});
     setSubmitError("");
     setDate(initialValues?.date ?? "");
+    setUserId(initialValues?.userId ?? "");
     setHoursWorked(String(initialValues?.hoursWorked ?? 0));
   }, [initialValues]);
 
@@ -36,7 +41,7 @@ export const TimecardForm = ({
     event.preventDefault();
     if (isSubmitting) return;
 
-    const result = timecardFormSchema.safeParse({ date, hoursWorked });
+    const result = timecardFormSchema.safeParse({ userId, date, hoursWorked });
 
     setSubmitError("");
     if (!result.success) {
@@ -55,6 +60,16 @@ export const TimecardForm = ({
     }
   }
 
+  const userFieldConfig = {
+    id: "userId",
+    label: "User",
+    inputType: "select",
+    placeholder: "Select a user",
+    options: users.map((user) => ({ value: user.id, label: user.name })),
+    onChange: setUserId,
+    value: userId,
+    error: errors.userId?.[0],
+  };
   const dateFieldConfig = {
     id: "date",
     label: "Date",
@@ -75,7 +90,7 @@ export const TimecardForm = ({
 
   return (
     <DynamicForm
-      fieldConfigs={[dateFieldConfig, hoursWorkedFieldConfig]}
+      fieldConfigs={[userFieldConfig, dateFieldConfig, hoursWorkedFieldConfig]}
       noValidate
       isSubmitting={isSubmitting}
       submitError={submitError}

@@ -23,14 +23,13 @@ export const TimecardFormPage = () => {
 
   const isEditing = !!id;
   const load = useCallback(async () => {
-    if (id) {
-      const record = await fetchTimecard(id);
-      if (!record) throw new Error("Timecard not found");
-      return { record, userId: record.userId };
-    }
-    const users = await fetchAllUsers();
+    const [users, record] = await Promise.all([
+      fetchAllUsers(),
+      id ? fetchTimecard(id) : Promise.resolve(null),
+    ]);
+    if (id && !record) throw new Error("Timecard not found");
     if (!users[0]) throw new Error("No users available");
-    return { record: null, userId: users[0].id };
+    return { record, users };
   }, [id]);
   const query = useApiQuery(
     load,
@@ -42,7 +41,7 @@ export const TimecardFormPage = () => {
     if (id) {
       await updateTimecard(id, data);
     } else {
-      await createTimecard({ ...data, userId: query.data!.userId });
+      await createTimecard(data);
     }
     toTimecardsPage();
   }
@@ -57,6 +56,7 @@ export const TimecardFormPage = () => {
       {!query.isLoading && !query.error && (
         <TimecardForm
           initialValues={initialValues}
+          users={query.data?.users ?? []}
           submitLabel={isEditing ? "Update Timecard" : "Create Timecard"}
           onSubmit={onSubmit}
           onCancel={() => toNavBack()}
