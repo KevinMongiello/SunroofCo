@@ -18,6 +18,27 @@ export class McpService {
       });
 
       server.registerTool(
+        'list_projects',
+        {
+          description:
+            'List all projects with their IDs, names, and statuses. Use this to discover available projects without knowing a name. Use get_project_details for a project’s full details.',
+          inputSchema: z.object({}),
+        },
+        async () => {
+          const projects = await this.projectService.findAll();
+          const results = projects.map(({ id, name, status }) => ({
+            id,
+            name,
+            status,
+          }));
+
+          return {
+            content: [{ type: 'text', text: JSON.stringify(results) }],
+          };
+        },
+      );
+
+      server.registerTool(
         'find_project',
         {
           description:
